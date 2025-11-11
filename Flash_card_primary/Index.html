@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Primary Math Operations - Tom & Jerry Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="game-container">
+    <img src="../assets/images/bg.jpeg" alt="background" class="bg-img">
+
+    <h1>Primary Math Operations</h1>
+
+    <!-- Level selection -->
+    <div id="level-select">
+      <button class="level-btn" onclick="startLevel(1)">Level 1: Addition</button>
+      <button class="level-btn" onclick="startLevel(2)">Level 2: Subtraction</button>
+    </div>
+
+    <!-- Game area (hidden initially) -->
+    <div id="game-area" style="display:none;">
+      <!-- Home button -->
+      <img src="../assets/images/home.png" alt="Home" id="home-btn" onclick="goHome()">
+
+      <div class="characters">
+        <img src="../assets/images/tom.png" alt="Tom" class="character tom">
+        <img src="../assets/images/jerry.png" alt="Jerry" class="character jerry">
+      </div>
+
+      <div class="question-box">
+        <div class="vertical-math">
+          <span id="num1" class="num"></span><br>
+          <span id="operator" class="op"></span>
+          <span id="num2" class="num"></span>
+          <div class="line"></div>
+          <input type="text" id="answer" class="answer-box" maxlength="3" />
+        </div>
+        <button id="checkBtn">Check Answer</button>
+      </div>
+
+      <div id="feedback"></div>
+      <p id="score">Score: 0/7</p>
+      <div id="confetti"></div>
+      <button id="restartBtn" style="display:none;" onclick="restartGame()">Restart</button>
+    </div>
+  </div>
+
+  <img src="../assets/images/default_logo.png" alt="CDAC Logo" class="logo-bottom">
+  <script src="script.js"></script>
+</body>
+</html>
