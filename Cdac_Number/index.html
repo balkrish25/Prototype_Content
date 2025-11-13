@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn the Numbers (1-5)</title>
+    <!-- 1. Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 2. Custom Styles -->
+    <style>
+        /* Use Inter font, which is loaded by Tailwind */
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #f0f9ff; /* Light blue background */
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+        }
+
+        /* Container to mimic the app screen */
+        #app-container {
+            width: 100%;
+            max-width: 900px; /* Max width for desktop */
+            aspect-ratio: 16 / 9; /* Enforce widescreen aspect ratio */
+            background-color: #ffffff;
+            border: 10px solid #00A99D; /* Teal border from screenshot */
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Hide overflow */
+            position: relative;
+        }
+
+        /* Header for stars and home button */
+        .app-header {
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            position: absolute; /* Position over the content */
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        #home-icon {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        #home-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Main content area */
+        #app-main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+            padding: 4rem 2rem 2rem; /* Add padding */
+            text-align: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Base class for all screens */
+        .screen {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem; /* Spacing between elements */
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Custom title styles from screenshots */
+        .title-main { color: #2A3B9A; }
+        .title-level1 { color: #E60000; }
+        .title-level2 { color: #E67800; }
+        .title-feedback-good { color: #00B050; }
+        .title-feedback-complete { color: #FF5E5E; }
+
+        /* Custom buttons */
+        .btn-primary {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0891B2; /* text-cyan-600 */
+            background-color: white;
+            border: 3px solid #0891B2; /* border-cyan-600 */
+            padding: 0.75rem 2rem;
+            border-radius: 9999px; /* rounded-full */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease-in-out;
+        }
+        .btn-primary:hover {
+            background-color: #f0f9ff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Triangle navigation buttons */
+        .btn-nav {
+            width: 0;
+            height: 0;
+            border-style: solid;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
+        }
+        .btn-nav:hover {
+            transform: scale(1.1);
+        }
+        .btn-nav span {
+            position: absolute;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            white-space: nowrap;
+        }
+        
+        /* Next button */
+        .btn-next {
+            border-width: 40px 0 40px 70px;
+            border-color: transparent transparent transparent #007BFF; /* Blue triangle */
+        }
+        .btn-next span {
+            top: 50%;
+            left: -65px;
+            transform: translateY(-50%);
+        }
+        
+        /* Back button */
+        .btn-back {
+            border-width: 40px 70px 40px 0;
+            border-color: transparent #007BFF transparent transparent; /* Blue triangle */
+        }
+        .btn-back span {
+            top: 50%;
+            left: 20px; /* Adjust as needed */
+            transform: translateY(-50%);
+        }
+        
+        /* Custom styles for quiz options */
+        .quiz-option {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1f2937; /* gray-800 */
+            border: 5px solid;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .quiz-option:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Colors for quiz options from screenshot */
+        .option-color-1 { background-color: #FEF9C3; border-color: #FDE047; } /* Yellow */
+        .option-color-2 { background-color: #FFEDD5; border-color: #FED7AA; } /* Peach */
+        .option-color-3 { background-color: #F5F3FF; border-color: #E9D5FF; } /* Purple */
+        .option-color-4 { background-color: #F0F9FF; border-color: #E0F2FE; } /* Blue */
+
+        /* Modal for feedback */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 2rem;
+            border: 1px solid #888;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: slideIn 0.3s;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Application Container -->
+    <div id="app-container">
+        
+        <!-- Header (Stars + Home Button) -->
+        <header class="app-header">
+            <div id="star-rating" class="flex gap-2">
+                <!-- Stars will be dynamically inserted here -->
+            </div>
+            <div id="home-icon">
+                <!-- Home Icon SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+        </header>
+
+        <!-- Main Content Area (Screens) -->
+        <main id="app-main">
+
+            <!-- Screen 1: Main Menu -->
+            <div id="main-menu" class="screen">
+                <h1 class="text-5xl font-bold title-main">Let us Learn the Numbers</h1>
+                <h2 class="text-4xl font-semibold title-main">(1 to 5)</h2>
+                <div class="flex gap-6 mt-8">
+                    <button id="start-level-1" class="btn-primary">Start 1st Level</button>
+                    <button id="start-level-2-menu" class="btn-primary">Start 2nd Level</button>
+                </div>
+                <div><img src="default_logo (1).png"></div>
+            </div>
+
+            <!-- Screen 2: Level 1 - Learn -->
+            <div id="level-1-learn" class="screen" style="display: none;">
+                <h2 class="text-3xl font-semibold title-level1">Read and Learn the number</h2>
+                <div id="learn-content" class="text-9xl font-bold text-blue-600">
+                    <!-- e.g., 1 = One -->
+                </div>
+                <div class="flex justify-between w-3/4 mt-4">
+                    <button id="level-1-back" class="btn-nav btn-back"><span>Back</span></button>
+                    <button id="level-1-next" class="btn-nav btn-next"><span>Next</span></button>
+                </div>
+            </div>
+
+            <!-- Screen 3: Level 2 - Start Menu -->
+            <div id="level-2-start" class="screen" style="display: none;">
+                <div class="flex items-center justify-center gap-10 w-full">
+                    <div class="flex-1">
+                        <h2 class="text-4xl font-semibold title-level2 mb-8">Select the Right Number</h2>
+                        <button id="start-level-2-quiz" class="btn-primary">Start 2nd Level</button>
+                    </div>
+                    <div class="flex-1">
+                        <!-- Placeholder Image -->
+                        <img src="Screenshot (1696).png" 
+                             alt="Friendly Chipmunk" 
+                             class="rounded-lg shadow-lg"
+                             onerror="this.src='https://placehold.co/300x400/EBF4FF/6366F1?text=Image%20Not%20Found'">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 4: Level 2 - Quiz -->
+            <div id="level-2-quiz" class="screen" style="display: none;">
+                <h2 class="text-3xl font-semibold title-level2">Click on the right number</h2>
+                <div id="question-content" class="text-7xl font-bold text-teal-600">
+                    <!-- e.g., Three = -->
+                </div>
+                <div id="options-container" class="flex gap-6 mt-4">
+                    <!-- Quiz options will be dynamically inserted here -->
+                </div>
+            </div>
+            
+            <!-- Screen 5: Feedback -->
+            <div id="feedback" class="screen" style="display: none;">
+                <h2 class="text-7xl font-bold title-feedback-good">Good!</h2>
+                <button id="feedback-next" class="btn-nav btn-next mt-8"><span>Next</span></button>
+            </div>
+
+            <!-- Screen 6: Level 2 - Complete -->
+            <div id="level-2-complete" class="screen" style="display: none;">
+                <!-- Placeholder Image -->
+                <img src="Screenshot (1694).png" 
+                     alt="Chipmunks Celebrating" 
+                     class="rounded-lg shadow-lg"
+                     onerror="this.src='https://placehold.co/600x400/FFFBEB/F59E0B?text=Image%20Not%20Found'">
+                <h2 class="text-5xl font-bold title-feedback-complete mt-4">You are Good</h2>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Modal for "Try Again" -->
+    <div id="try-again-modal" class="modal">
+        <div class="modal-content">
+            <h3 class="text-3xl font-bold text-red-600 mb-4">Try Again!</h3>
+            <p class="text-lg text-gray-700 mb-6">That's not the right number. Give it another shot!</p>
+            <button id="close-modal" class="btn-primary" style="border-color: #DC2626; color: #DC2626;">OK</button>
+        </div>
+    </div>
+
+
+    <!-- 3. JavaScript Game Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- STATE & DATA ---
+
+            // Screen elements
+            const screens = {
+                'main-menu': document.getElementById('main-menu'),
+                'level-1-learn': document.getElementById('level-1-learn'),
+                'level-2-start': document.getElementById('level-2-start'),
+                'level-2-quiz': document.getElementById('level-2-quiz'),
+                'feedback': document.getElementById('feedback'),
+                'level-2-complete': document.getElementById('level-2-complete'),
+            };
+
+            // Modal elements
+            const tryAgainModal = document.getElementById('try-again-modal');
+            const closeModalBtn = document.getElementById('close-modal');
+
+            // Header elements
+            const starRatingEl = document.getElementById('star-rating');
+            const homeIcon = document.getElementById('home-icon');
+
+            // Level 1 elements
+            const learnContentEl = document.getElementById('learn-content');
+            const level1BackBtn = document.getElementById('level-1-back');
+            const level1NextBtn = document.getElementById('level-1-next');
+
+            // Level 2 elements
+            const questionContentEl = document.getElementById('question-content');
+            const optionsContainerEl = document.getElementById('options-container');
+            const feedbackNextBtn = document.getElementById('feedback-next');
+
+            // Button elements
+            const startLevel1Btn = document.getElementById('start-level-1');
+            const startLevel2MenuBtn = document.getElementById('start-level-2-menu');
+            const startLevel2QuizBtn = document.getElementById('start-level-2-quiz');
+
+            // Game data
+            const numberData = [
+                null, // 1-based indexing
+                { num: 1, word: 'One' },
+                { num: 2, word: 'Two' },
+                { num: 3, word: 'Three' },
+                { num: 4, word: 'Four' },
+                { num: 5, word: 'Five' },
+            ];
+            
+            // SVGs for stars
+            const starEmptySVG = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#BCE4E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            `;
+            const starFilledSVG = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="#00B050" stroke="#00B050" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            `;
+
+            // Game state
+            let currentScreen = 'main-menu';
+            let level1Progress = 0; // 1 to 5
+            let level2Score = 0;
+            let level2Questions = [];
+            let currentQuestionIndex = 0;
+            
+            // Option colors
+            const optionColors = ['option-color-1', 'option-color-2', 'option-color-3', 'option-color-4'];
+
+
+            // --- CORE FUNCTIONS ---
+
+            /**
+             * Hides all screens and shows the one with the given ID
+             * @param {string} screenId - The ID of the screen to show
+             */
+            function showScreen(screenId) {
+                Object.values(screens).forEach(screen => {
+                    screen.style.display = 'none';
+                });
+                screens[screenId].style.display = 'flex';
+                currentScreen = screenId;
+                
+                // Hide or show header based on screen
+                const header = document.querySelector('.app-header');
+                if (screenId === 'main-menu') {
+                    header.style.display = 'none';
+                } else {
+                    header.style.display = 'flex';
+                }
+            }
+
+            /**
+             * Updates the star rating display
+             * @param {number} filledCount - Number of stars to fill
+             */
+            function updateStars(filledCount) {
+                starRatingEl.innerHTML = '';
+                for (let i = 0; i < 5; i++) {
+                    starRatingEl.innerHTML += (i < filledCount) ? starFilledSVG : starEmptySVG;
+                }
+            }
+
+            /**
+             * Resets all game state and returns to the main menu
+             */
+            function goHome() {
+                level1Progress = 0;
+                level2Score = 0;
+                currentQuestionIndex = 0;
+                level2Questions = [];
+                showScreen('main-menu');
+            }
+
+
+            // --- LEVEL 1 FUNCTIONS ---
+
+            /**
+             * Starts Level 1
+             */
+            function startLevel1() {
+                level1Progress = 1;
+                updateStars(0);
+                renderLevel1();
+                showScreen('level-1-learn');
+            }
+
+            /**
+             * Renders the current learning screen for Level 1
+             */
+            function renderLevel1() {
+                const data = numberData[level1Progress];
+                learnContentEl.innerHTML = `${data.num} = ${data.word}`;
+                
+                // Show/hide back button
+                level1BackBtn.style.visibility = (level1Progress <= 1) ? 'hidden' : 'visible';
+                
+                // Change "Next" text if at the end
+                const nextSpan = level1NextBtn.querySelector('span');
+                if (level1Progress === 5) {
+                    nextSpan.textContent = 'Finish';
+                } else {
+                    nextSpan.textContent = 'Next';
+                }
+                
+                // Update stars based on progress
+                updateStars(level1Progress - 1);
+            }
+
+            function level1Next() {
+                if (level1Progress < 5) {
+                    level1Progress++;
+                    renderLevel1();
+                } else {
+                    // Finished Level 1, go to Level 2 start screen
+                    startLevel2Menu();
+                }
+            }
+
+            function level1Back() {
+                if (level1Progress > 1) {
+                    level1Progress--;
+                    renderLevel1();
+                }
+            }
+
+
+            // --- LEVEL 2 FUNCTIONS ---
+
+            /**
+             * Shows the Level 2 start menu
+             */
+            function startLevel2Menu() {
+                updateStars(5); // Show 5 stars for completing level 1
+                showScreen('level-2-start');
+            }
+
+            /**
+             * Starts the Level 2 Quiz
+             */
+            function startLevel2Quiz() {
+                level2Score = 0;
+                currentQuestionIndex = 0;
+                updateStars(0);
+                
+                // Create and shuffle questions
+                level2Questions = shuffleArray([...numberData].slice(1)); // All numbers 1-5
+                
+                renderQuizQuestion();
+                showScreen('level-2-quiz');
+            }
+
+            /**
+             * Renders the current quiz question
+             */
+            function renderQuizQuestion() {
+                const question = level2Questions[currentQuestionIndex];
+                
+                // Set question text
+                questionContentEl.textContent = `${question.word} =`;
+                
+                // Generate options
+                const options = generateQuizOptions(question.num);
+                const shuffledColors = shuffleArray([...optionColors]);
+                
+                // Display options
+                optionsContainerEl.innerHTML = '';
+                options.forEach((option, index) => {
+                    const colorClass = shuffledColors[index % shuffledColors.length];
+                    const optionEl = document.createElement('div');
+                    optionEl.className = `quiz-option ${colorClass}`;
+                    optionEl.textContent = option;
+                    optionEl.dataset.value = option; // Store the value
+                    optionEl.addEventListener('click', () => checkAnswer(option));
+                    optionsContainerEl.appendChild(optionEl);
+                });
+            }
+
+            /**
+             * Checks the selected answer
+             * @param {number} selectedAnswer - The number the user clicked
+             */
+            function checkAnswer(selectedAnswer) {
+                const correctAnswer = level2Questions[currentQuestionIndex].num;
+                
+                if (selectedAnswer === correctAnswer) {
+                    // Correct answer
+                    level2Score++;
+                    updateStars(level2Score);
+                    showScreen('feedback');
+                } else {
+                    // Incorrect answer
+                    showTryAgainModal();
+                }
+            }
+
+            /**
+             * Handles logic after the "Good!" feedback screen
+             */
+            function feedbackNext() {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < level2Questions.length) {
+                    // More questions left
+                    renderQuizQuestion();
+                    showScreen('level-2-quiz');
+                } else {
+                    // Quiz complete
+                    showCompletionScreen();
+                }
+            }
+
+            /**
+             * Shows the final completion screen
+             */
+            function showCompletionScreen() {
+                updateStars(5); // Full stars
+                showScreen('level-2-complete');
+            }
+
+            // --- MODAL FUNCTIONS ---
+
+            function showTryAgainModal() {
+                tryAgainModal.style.display = 'flex';
+            }
+
+            function hideTryAgainModal() {
+                tryAgainModal.style.display = 'none';
+            }
+
+            // --- HELPER FUNCTIONS ---
+
+            /**
+             * Generates 4 unique quiz options, including the correct answer
+             * @param {number} correctAnswer - The correct number
+             * @returns {number[]} - Array of 4 shuffled options
+             */
+            function generateQuizOptions(correctAnswer) {
+                let options = new Set([correctAnswer]);
+                const allNumbers = [1, 2, 3, 4, 5];
+                
+                while (options.size < 4) {
+                    const randomNum = allNumbers[Math.floor(Math.random() * allNumbers.length)];
+                    options.add(randomNum);
+                }
+                
+                return shuffleArray(Array.from(options));
+            }
+
+            /**
+             * Shuffles an array in place (Fisher-Yates)
+             * @param {Array} array - The array to shuffle
+             * @returns {Array} - The shuffled array
+             */
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+
+
+            // --- EVENT LISTENERS ---
+            
+            // Navigation
+            homeIcon.addEventListener('click', goHome);
+            
+            // Main Menu
+            startLevel1Btn.addEventListener('click', startLevel1);
+            startLevel2MenuBtn.addEventListener('click', startLevel2Menu);
+            
+            // Level 1
+            level1NextBtn.addEventListener('click', level1Next);
+            level1BackBtn.addEventListener('click', level1Back);
+            
+            // Level 2
+            startLevel2QuizBtn.addEventListener('click', startLevel2Quiz);
+            feedbackNextBtn.addEventListener('click', feedbackNext);
+            
+            // Modal
+            closeModalBtn.addEventListener('click', hideTryAgainModal);
+            window.addEventListener('click', (event) => {
+                if (event.target == tryAgainModal) {
+                    hideTryAgainModal();
+                }
+            });
+
+            // --- INITIALIZATION ---
+            goHome(); // Start at the main menu
+            
+        });
+    </script>
+</body>
+</html>

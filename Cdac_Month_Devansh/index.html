@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match the Months</title>
+    <script src="https://cdn.jsdelivr.net/npm/tone@14.7.71/build/Tone.min.js"></script>
+    <style>
+        /* General Setup & Fullscreen Container */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            /* Make body the size of the viewport */
+            width: 100vw; 
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #e0f7fa; /* Light background for contrast */
+            overflow: hidden; /* Hide scrollbars */
+        }
+
+        .app-container {
+            width: 100vw; /* Full width */
+            height: 100vh; /* Full height */
+            margin: 0;
+            padding: 20px;
+            background-color: white;
+            box-shadow: none; /* Removed heavy box shadow for fullscreen */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* --- Global Header & Navigation --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            margin-bottom: 20px;
+        }
+
+        .main-title {
+            color: #4169E1; /* Royal Blue */
+            font-size: 2.2rem;
+            font-weight: bold;
+            text-align: center;
+            flex-grow: 1;
+            /* Default: Hidden, only made visible by JS on game screen */
+            display: none; 
+        }
+
+        .home-icon {
+            font-size: 2.5rem;
+            cursor: pointer;
+            text-decoration: none;
+            color: #ff4500; /* Red-Orange for house */
+            margin-left: auto; /* Push to the right */
+        }
+        
+        @media (max-width: 600px) {
+            .main-title {
+                font-size: 1.5rem;
+            }
+        }
+
+
+        /* --- 1. Start Screen Styling --- */
+        #start-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .start-text {
+            color: #4169E1;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 40px;
+        }
+        
+        .start-button {
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #4169E1;
+            background-color: #f7e1e1; 
+            border: 2px solid #ffaa99;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px #e09384;
+        }
+
+        .start-button:hover {
+            background-color: #f5cfcf;
+            box-shadow: 0 2px #e09384;
+            transform: translateY(2px);
+        }
+
+        /* Footer & Logo - Visible only on Start Screen */
+        .footer {
+            position: absolute;
+            bottom: 10px;
+            left: 20px;
+            font-size: 1.6rem; 
+            color: blue;
+            font-weight: 600; 
+            z-index: 10;
+        }
+
+        /* New CSS for the actual image logo */
+        .logo-image {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            width: 100px; /* Adjust as needed */
+            height: auto;
+            max-height: 80px; /* To prevent it from becoming too large */
+            z-index: 10;
+        }
+
+        /* --- 2. Game Screen Styling (Drag and Drop) --- */
+        #game-screen {
+            display: none;
+            flex-direction: column;
+            flex-grow: 1;
+            height: 100vh; 
+        }
+
+        /* Flexbox for specific 7-5 centering */
+        .months-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Centers both lines */
+            align-content: flex-start; 
+            gap: 15px;
+            padding: 10px;
+            flex-grow: 1; 
+            overflow-y: auto; 
+            padding-bottom: 20px; 
+        }
+        
+        /* Utility class to force a line break for the 7-5 layout */
+        .month-pair.line-break::before {
+            content: "";
+            width: 100%; 
+            order: 1; 
+        }
+        
+        .month-pair {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex: 0 0 auto; 
+            width: 120px; 
+        }
+
+        .month-label {
+            color: #008000; 
+            font-weight: 700; /* Month labels are bold */
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .drop-target {
+            width: 100%;
+            height: 40px;
+            background-color: #FFFFE0; 
+            border: 1px solid #00BFFF; 
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 500;
+            color: #333;
+            transition: background-color 0.2s;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .drop-target.drag-over {
+            border: 2px dashed #ff4500;
+        }
+
+        /* Draggable Container Wrapper - Blue border maintained, background changed to white */
+        .draggable-container-wrapper {
+            margin-top: 20px; 
+            padding: 15px; 
+            border: 2px solid #00BFFF; 
+            background-color: #FFFFFF; 
+            border-radius: 8px; 
+            
+            height: 30vh; 
+            flex-shrink: 0; 
+            
+            overflow-y: auto; 
+        }
+        
+        .draggable-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        /* FIX: Made the draggable month font bold (700) */
+        .draggable-month {
+            padding: 2px 5px; 
+            background-color: transparent; 
+            border: none; 
+            border-radius: 0; 
+            cursor: grab;
+            font-weight: 700; /* Set to 700 for bold */
+            color: #333;
+            box-shadow: none; 
+            transition: background-color 0.2s; 
+            user-select: none; 
+        }
+
+        .draggable-month:hover {
+            background-color: #f0f0f0; 
+        }
+
+        /* Class for selected draggable month */
+        .draggable-month.selected {
+            background-color: #ffcc99; 
+        }
+
+        .dragging {
+            opacity: 0.4;
+        }
+
+        /* Month placed inside target */
+        .month-placed {
+            display: block;
+            padding: 5px 10px; 
+            background-color: #FFFFE0;
+            border: none;
+            border-radius: 4px; 
+            font-weight: bold;
+            color: #4169E1;
+        }
+
+        /* --- 4. End Screen Styling & Animation --- */
+        #end-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .end-title {
+            color: #ff4500; 
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+
+        .penguin-image {
+            max-width: 40%; /* Made image smaller */
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            
+            /* Animation properties - Initially off-screen */
+            transform: translateY(-200vh);
+            opacity: 0;
+            animation: bounce-in 1.5s ease-out forwards;
+        }
+
+        /* Keyframe Animation for Drop and Bounce */
+        @keyframes bounce-in {
+            0% {
+                transform: translateY(-200vh); 
+                opacity: 0;
+            }
+            60% {
+                transform: translateY(0); 
+                opacity: 1;
+            }
+            80% {
+                transform: translateY(-20px); 
+            }
+            100% {
+                transform: translateY(0); 
+                opacity: 1;
+            }
+        }
+
+        /* Message Box for Feedback */
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #fff;
+            border: 3px solid;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="header" id="app-header">
+        <a class="home-icon" href="#" onclick="showScreen('start-screen'); return false;">&#x2302;</a>
+    </div>
+
+    <div id="start-screen" class="screen">
+        <div class="start-text">Let us Learn the name of Months</div>
+        <button class="start-button" onclick="startGame()">Start</button>
+    </div>
+
+    <div id="game-screen" class="screen">
+        <div class="months-grid" id="months-grid">
+            </div>
+
+        <div class="draggable-container-wrapper">
+            <div class="draggable-container" id="draggable-months-container">
+                </div>
+        </div>
+    </div>
+
+    <div id="end-screen" class="screen">
+        <div class="end-title">You are Good</div>
+        <img src="Screenshot (1645).png" 
+             alt="Success message with dancing penguins" 
+             class="penguin-image">
+    </div>
+    
+    <div class="footer" id="app-footer">
+        Prototype Content - Secondary Level
+    </div>
+    
+    <img src="default_logo.png" alt="e-SAdhya CDAC, KP, Bangalore Logo" class="logo-image" id="app-logo">
+
+</div>
+
+<div class="message-box" id="feedback-message"></div>
+
+<script>
+    // --- Global Variables and Constants ---
+    const MONTHS = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    const appContainer = document.querySelector('.app-container');
+    const startScreen = document.getElementById('start-screen');
+    const gameScreen = document.getElementById('game-screen');
+    const endScreen = document.getElementById('end-screen');
+    const header = document.getElementById('app-header');
+    const appFooter = document.getElementById('app-footer');
+    const appLogo = document.getElementById('app-logo'); // Now refers to the img tag
+    const mainTitle = document.createElement('div');
+    mainTitle.className = 'main-title';
+    let correctCount = 0;
+    
+    // Tone.js Synth Setup (for audio feedback)
+    const successSynth = new Tone.MetalSynth({
+        frequency: 400,
+        envelope: { attack: 0.001, decay: 0.1, release: 0.05 },
+        harmonicity: 5.1,
+        modulationIndex: 32,
+        resonance: 4000,
+        octaves: 1.5,
+    }).toDestination();
+    
+    const failSynth = new Tone.NoiseSynth({
+        noise: { type: 'pink' },
+        envelope: { attack: 0.005, decay: 0.2, sustain: 0.0, release: 0.3 }
+    }).toDestination();
+
+    // --- Utility Functions ---
+
+    /**
+     * Shuffles an array using the Fisher-Yates algorithm.
+     */
+    function shuffleArray(array) {
+        let arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    /**
+     * Hides all screens and shows the requested one.
+     */
+    function showScreen(screenId) {
+        [startScreen, gameScreen, endScreen].forEach(screen => {
+            if (screen) {
+                screen.style.display = 'none';
+            }
+        });
+
+        const penguinImage = document.querySelector('.penguin-image');
+        if (penguinImage) {
+            penguinImage.style.animation = 'none'; 
+            penguinImage.offsetHeight; 
+            penguinImage.style.animation = ''; 
+        }
+
+        const screenToShow = document.getElementById(screenId);
+        if (screenToShow) {
+            screenToShow.style.display = 'flex';
+        }
+
+        // Home icon visibility (Always visible)
+        const homeIcon = header.querySelector('.home-icon');
+        homeIcon.style.display = 'block'; 
+        
+        // Control Main Title Visibility (Only on Game Screen)
+        const isGameScreen = screenId === 'game-screen';
+        
+        if (!header.contains(mainTitle)) {
+            mainTitle.textContent = 'Match the Months'; 
+            header.insertBefore(mainTitle, homeIcon);
+        }
+
+        mainTitle.style.display = isGameScreen ? 'block' : 'none';
+        
+        // CONTROL FOOTER/LOGO VISIBILITY (Only on Start Screen)
+        const isStartScreen = screenId === 'start-screen';
+        if (appFooter) {
+            appFooter.style.display = isStartScreen ? 'block' : 'none';
+        }
+        if (appLogo) {
+            // For img tag, use 'block' to make it visible, 'none' to hide
+            appLogo.style.display = isStartScreen ? 'block' : 'none';
+        }
+    }
+    
+    /** * Plays a sequence of success sounds (multiple claps/snaps).
+     */
+    function playSuccessSound() {
+        if (Tone.context.state !== 'running') {
+            Tone.context.resume();
+        }
+        const now = Tone.now();
+        const numClaps = 3; 
+        const delayBetween = 0.1; 
+
+        for (let i = 0; i < numClaps; i++) {
+            successSynth.triggerAttackRelease('A4', '32n', now + (i * delayBetween));
+        }
+    }
+
+    /** Plays a failure sound (Buzz). */
+    function playFailureSound() {
+        if (Tone.context.state !== 'running') {
+            Tone.context.resume();
+        }
+        failSynth.triggerAttackRelease('4n');
+    }
+
+    function showFeedback(message, type = 'success') {
+        const msgBox = document.getElementById('feedback-message');
+        msgBox.textContent = message;
+        msgBox.style.borderColor = type === 'success' ? '#008000' : '#ff4500';
+        msgBox.style.color = type === 'success' ? '#008000' : '#ff4500';
+        msgBox.style.display = 'block';
+        setTimeout(() => {
+            msgBox.style.display = 'none';
+        }, 1000);
+    }
+
+
+    // --- Game Logic ---
+
+    function startGame() {
+        if (Tone.context.state !== 'running') {
+            Tone.context.resume();
+        }
+
+        correctCount = 0;
+        document.getElementById('months-grid').innerHTML = '';
+        document.getElementById('draggable-months-container').innerHTML = '';
+        
+        createDropTargets();
+        createDraggableMonths();
+        showScreen('game-screen');
+    }
+
+    /** Creates the static month labels and drop targets (7-5 centered layout). */
+    function createDropTargets() {
+        const grid = document.getElementById('months-grid');
+        MONTHS.forEach((month, index) => {
+            const monthId = month.toLowerCase();
+            const pairDiv = document.createElement('div');
+            pairDiv.className = 'month-pair'; 
+
+            // Add the line-break class to the 8th item container (index 7)
+            if (index === 7) {
+                 pairDiv.classList.add('line-break'); 
+            }
+            
+            // 1. Month Label (Green Text)
+            const label = document.createElement('div');
+            label.className = 'month-label';
+            label.textContent = month;
+            
+            // 2. Drop Target (Yellow Box)
+            const dropTarget = document.createElement('div');
+            dropTarget.className = 'drop-target';
+            dropTarget.id = `target-${monthId}`;
+            dropTarget.dataset.correctMonth = monthId;
+
+            // Add drag and drop event listeners
+            dropTarget.addEventListener('dragover', handleDragOver);
+            dropTarget.addEventListener('dragleave', handleDragLeave);
+            dropTarget.addEventListener('drop', handleDrop);
+            
+            // Add click/tap listener to allow replacing a placed item
+            dropTarget.addEventListener('click', handleTargetClick);
+
+
+            pairDiv.appendChild(label);
+            pairDiv.appendChild(dropTarget);
+            grid.appendChild(pairDiv);
+        });
+    }
+
+    /** Creates and shuffles the draggable month names. */
+    function createDraggableMonths() {
+        const container = document.getElementById('draggable-months-container');
+        const shuffledMonths = shuffleArray(MONTHS);
+
+        shuffledMonths.forEach(month => {
+            const draggable = document.createElement('div');
+            draggable.className = 'draggable-month';
+            draggable.textContent = month;
+            draggable.id = `draggable-${month.toLowerCase()}`;
+            draggable.setAttribute('draggable', true);
+            
+            // Add drag event listeners
+            draggable.addEventListener('dragstart', handleDragStart);
+            draggable.addEventListener('dragend', handleDragEnd);
+
+            // Add click/tap listener for accessibility or mobile use (simple mode)
+            draggable.addEventListener('click', handleDraggableClick);
+
+            container.appendChild(draggable);
+        });
+    }
+
+    // --- Drag and Drop Handlers ---
+
+    let draggedElementId = null;
+    let selectedDraggable = null; 
+
+    function handleDragStart(e) {
+        draggedElementId = e.target.id;
+        e.target.classList.add('dragging');
+        e.dataTransfer.setData('text/plain', draggedElementId);
+        e.dataTransfer.setDragImage(e.target, 0, 0); // Use the element itself as the drag image
+        document.body.style.cursor = 'grabbing';
+    }
+
+    function handleDragEnd(e) {
+        e.target.classList.remove('dragging');
+        document.body.style.cursor = 'default';
+        draggedElementId = null;
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault(); 
+        const target = e.target.closest('.drop-target');
+        if (target) {
+            target.classList.add('drag-over');
+        }
+    }
+
+    function handleDragLeave(e) {
+        const target = e.target.closest('.drop-target');
+        if (target) {
+            target.classList.remove('drag-over');
+        }
+    }
+
+    function handleDrop(e) {
+        e.preventDefault();
+        const dropTarget = e.target.closest('.drop-target');
+        dropTarget.classList.remove('drag-over');
+
+        const draggedId = e.dataTransfer.getData('text/plain');
+        const draggedMonth = draggedId.replace('draggable-', '');
+
+        checkMatch(draggedId, draggedMonth, dropTarget);
+    }
+    
+    function handleDraggableClick(e) {
+        const draggable = e.target;
+        
+        // Remove 'selected' from previously selected
+        if (selectedDraggable) {
+            selectedDraggable.classList.remove('selected');
+        }
+        
+        // Toggle 'selected' class on current draggable
+        if (selectedDraggable !== draggable) {
+            draggable.classList.add('selected');
+            selectedDraggable = draggable;
+        } else {
+            // If clicking the same one again, deselect it
+            selectedDraggable = null;
+        }
+    }
+    
+    function handleTargetClick(e) {
+        const dropTarget = e.target.closest('.drop-target');
+        
+        const placedItem = dropTarget.querySelector('.month-placed');
+        if (placedItem) {
+            returnDraggableToSource(dropTarget, placedItem);
+            return;
+        }
+
+        if (selectedDraggable) {
+            const draggedId = selectedDraggable.id;
+            const draggedMonth = draggedId.replace('draggable-', '');
+            
+            checkMatch(draggedId, draggedMonth, dropTarget);
+            
+            // If match was successful, deselect the draggable
+            if (draggedMonth === dropTarget.dataset.correctMonth) {
+                selectedDraggable.classList.remove('selected');
+                selectedDraggable = null;
+            }
+        }
+    }
+    
+    function returnDraggableToSource(dropTarget, placedItem) {
+        const monthName = placedItem.textContent.toLowerCase();
+        const draggedElement = document.getElementById(`draggable-${monthName}`);
+        
+        if (draggedElement) {
+            dropTarget.innerHTML = ''; 
+            draggedElement.style.display = 'block'; 
+            correctCount--; 
+            playFailureSound(); 
+        }
+    }
+
+
+    /** Checks if the dropped month matches the target. */
+    function checkMatch(draggedId, draggedMonth, dropTarget) {
+        const correctMonth = dropTarget.dataset.correctMonth;
+
+        if (dropTarget.querySelector('.month-placed')) {
+            showFeedback("This spot is already filled!", 'failure'); 
+            playFailureSound();
+            return;
+        }
+
+        if (draggedMonth === correctMonth) {
+            const draggedElement = document.getElementById(draggedId);
+
+            dropTarget.innerHTML = `<span class="month-placed">${draggedElement.textContent}</span>`;
+            draggedElement.style.display = 'none';
+
+            playSuccessSound(); 
+            correctCount++;
+            
+            checkCompletion();
+        } else {
+            playFailureSound(); 
+        }
+    }
+
+    /** Checks if all 12 months have been placed correctly. */
+    function checkCompletion() {
+        if (correctCount === MONTHS.length) {
+            setTimeout(() => {
+                showScreen('end-screen');
+            }, 500);
+        }
+    }
+
+    // --- Initialization ---
+
+    showScreen('start-screen');
+
+</script>
+
+</body>
+</html>

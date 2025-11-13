@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match the Clothes, Seasons, Weather</title>
+    
+    <style>
+        /* --- General Layout and Reset --- */
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            -webkit-user-select: none;
+            user-select: none;
+            background-color: #f3f4f6; /* Light gray background */
+        }
+
+        /* Full-screen container */
+        .app-container-inner {
+            width: 100%;
+            height: 100%;
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* Screens: 100% WIDTH AND HEIGHT */
+        .game-screen-content, .start-screen-content, .success-screen-content {
+            width: 100%;
+            height: 100%; 
+            flex-grow: 1; 
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            padding: 1rem 0;
+            position: relative; 
+            box-sizing: border-box; 
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+
+        /* --- Start Screen Styles (Unchanged) --- */
+        .start-screen-content {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .start-title {
+            font-size: 2.25rem; 
+            font-weight: bold; 
+            color: #10b981; 
+            margin-bottom: 3rem; 
+        }
+
+        #start-btn {
+            padding: 0.75rem 3rem; 
+            background-color: #a78bfa; 
+            color: white;
+            font-weight: 600; 
+            font-size: 1.25rem; 
+            border-radius: 9999px; 
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.15s ease-in-out;
+            border: none;
+            cursor: pointer;
+        }
+        #start-btn:hover {
+            background-color: #8b5cf6; 
+            transform: scale(1.05); 
+        }
+        #start-btn:active {
+            transform: scale(0.95); 
+        }
+
+        /* Absolute positioning for bottom elements */
+        .start-screen-content > div:nth-child(2) { 
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            font-size: 0.75rem; 
+            color: #6b7280; 
+        }
+        .start-screen-content > div:nth-child(3) { 
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+        }
+        .start-screen-content > div:nth-child(3) img {
+            /* height: 2rem;  */
+        }
+
+        /* --- Game Screen Styles --- */
+        .game-screen-content {
+            padding: 1rem 0; 
+        }
+
+        /* Header Fix: Title is centered */
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start; 
+            margin-bottom: 1.5rem; 
+            padding-top: 0.5rem; 
+            padding-left: 1rem; 
+            padding-right: 1rem;
+            position: relative;
+        }
+        .game-title-wrapper {
+            flex-grow: 1; 
+            margin: 0 1rem; 
+            display: flex;
+            justify-content: center;
+        }
+        .game-header h2 {
+            text-align: center; 
+            font-size: 1.125rem; 
+            font-weight: 600; 
+            color: #4b5563; 
+            max-width: 80%; 
+        }
+        #home-btn-game {
+            position: absolute; 
+            right: 1rem;
+            top: 1rem;
+            font-size: 1.875rem; 
+            padding: 0.5rem; 
+            border-radius: 9999px;
+            transition: background-color 0.15s ease-in-out;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+        #home-btn-game:hover {
+            background-color: #f3f4f6; 
+        }
+        
+        /* New Wrapper to center the main content block */
+        .main-game-content-wrapper {
+            width: 100%;
+            max-width: 800px; 
+            margin: 0 auto; 
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            padding: 0 1rem;
+            box-sizing: border-box;
+            position: relative; 
+        }
+
+        /* ----------------------------------------------------- */
+        /* UNIFIED GRID: Holds Images, Drop Zones, and Labels */
+        /* ----------------------------------------------------- */
+        .game-grid {
+            display: grid;
+            /* 4 columns: 100px for labels, 3 columns (1fr each) for content/images */
+            grid-template-columns: 100px repeat(3, 1fr); 
+            /* 4 rows: 1 for images, 3 for drop zones. auto sizes based on content. */
+            grid-template-rows: auto repeat(3, auto); 
+            gap: 0.5rem 0.25rem; /* Vertical gap 0.5rem, Horizontal gap 0.25rem */
+            flex-grow: 1;
+            width: 100%;
+            margin-bottom: 1rem; 
+        }
+
+        /* Image Styling */
+        .image-cell {
+            /* We remove grid-column: 2 / span 3; from here. */
+            /* We will set column for each image div in HTML now. */
+            grid-row: 1; /* First row for images */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* Image itself */
+        .image-fix {
+            width: 100%; 
+            height: 221px; 
+            object-fit: cover; 
+            border-radius: 0.5rem; 
+            border: 4px solid #5eead4; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); 
+        }
+        
+        /* Label Styling (fixed in column 1) */
+        .grid-label {
+            grid-column: 1; /* Always in the first column */
+            color: #059669; 
+            font-weight: bold;
+            font-size: 1.125rem; 
+            text-align: right;
+            padding-right: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            min-height: 40px; /* Match drop zone height */
+        }
+        /* Specific row placement for labels */
+        #label-seasons { grid-row: 2; }
+        #label-weather { grid-row: 3; }
+        #label-clothes { grid-row: 4; }
+
+
+        /* Drop Zone Styles (fixed in columns 2, 3, 4) */
+        .drop-zone {
+            /* We set column for each drop zone in HTML now to ensure explicit alignment */
+            min-height: 40px;
+            border: 2px solid #9ca3af; 
+            background-color: #fef3c7; 
+            border-radius: 0.375rem; 
+            padding: 0.5rem; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem; 
+            width: 100%; 
+            box-sizing: border-box;
+        }
+
+        /* Specific row placement for drop zones (starting from row 2) */
+        #drop-season-1, #drop-season-2, #drop-season-3 { grid-row: 2; }
+        #drop-weather-1, #drop-weather-2, #drop-weather-3 { grid-row: 3; }
+        #drop-clothes-1, #drop-clothes-2, #drop-clothes-3 { grid-row: 4; }
+
+        /* Drop Zone States (Unchanged) */
+        .drag-over {
+            transform: scale(1.05);
+            background-color: #d1fae5 !important; 
+        }
+        .placed {
+            cursor: default;
+            background-color: #a7f3d0 !important; 
+            color: #065f46; 
+            border-color: #10b981 !important; 
+            pointer-events: none;
+            font-weight: 600;
+        }
+
+        /* Word Bank (Centered) */
+        #word-bank-container {
+            flex-shrink: 0;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        #word-bank {
+            padding: 1rem; 
+            border: 2px solid #22d3ee; 
+            border-radius: 0.5rem; 
+            min-height: 100px; 
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem; 
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06); 
+        }
+
+        /* Draggable Words (Unchanged) */
+        .draggable {
+            touch-action: none;
+            cursor: grab;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            background-color: white;
+            border: 1px solid #d1d5db; 
+            border-radius: 0.375rem; 
+            padding: 0.5rem 1rem; 
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); 
+            text-align: center;
+            font-size: 0.875rem; 
+            font-weight: 600; 
+        }
+        .dragging {
+            opacity: 0.7;
+            cursor: grabbing;
+            transform: scale(1.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- Success Screen Styles (Unchanged) --- */
+        .success-screen-content {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem; 
+        }
+        .success-screen-content h1 {
+            font-size: 2.5rem; 
+            font-weight: bold;
+            color: #f97316; 
+            margin-bottom: 1.5rem; 
+        }
+        .success-screen-content img {
+            border-radius: 0.5rem; 
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); 
+            margin-bottom: 2.5rem; 
+            width: 100%;
+            max-width: 24rem; 
+        }
+        
+        /* Home Icon on Success Screen */
+        #home-btn-success {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 1.875rem; 
+            padding: 0.5rem; 
+            border-radius: 9999px;
+            transition: background-color 0.15s ease-in-out;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+        #home-btn-success:hover {
+            background-color: #f3f4f6; 
+        }
+
+        /* Bouncing Animation (Unchanged) */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .bouncing-image {
+            animation: bounce 2s infinite; 
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="app-container">
+
+    <div id="app-container-inner" class="app-container-inner">
+
+        <div id="start-screen" class="start-screen-content">
+            <div class="text-center p-8">
+                <h1 class="start-title">Match the Clothes, Seasons, Weather by seeing the picture</h1>
+                <button id="start-btn">
+                    Start
+                </button>
+            </div>
+            
+            <div>
+                <b>Prototype Content - Pre-Vocational Level</b>
+            </div>
+            
+            <div>
+                <img src="default_logo.png" alt="CDAC Logo" height="100px">
+            </div>
+        </div>
+
+        <div id="game-screen" class="game-screen-content hidden">
+            
+            <header class="game-header">
+                <div class="game-title-wrapper">
+                    <h2>
+                        Match the words of Seasons, Clothes, Weather by seeing the picture
+                    </h2>
+                </div>
+                <button id="home-btn-game" aria-label="Go to Start Screen">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#f97316" viewBox="0 0 256 256"><path d="M240,112.23V208a16,16,0,0,1-16,16H160a16,16,0,0,1-16-16V168a8,8,0,0,0-8-8H120a8,8,0,0,0-8,8v40a16,16,0,0,1-16,16H32a16,16,0,0,1-16-16V112.23a16,16,0,0,1,5.15-11.59l88-81.12a16,16,0,0,1,21.7,0l88,81.12A16,16,0,0,1,240,112.23Z"></path></svg>
+                </button>
+            </header>
+            
+            <div class="main-game-content-wrapper">
+
+                <div class="game-grid">
+                    
+                    <div class="image-cell" style="grid-column: 2;">
+                        <img src="Screenshot (1642).png" alt="Girl with umbrella in rain" class="image-fix">
+                    </div>
+                    <div class="image-cell" style="grid-column: 3;">
+                        <img src="Screenshot (1641).png" alt="Kids building a snowman" class="image-fix">
+                    </div>
+                    <div class="image-cell" style="grid-column: 4;">
+                        <img src="Screenshot (1639).png" alt="Hot, sunny landscape" class="image-fix">
+                    </div>
+                    
+                    <div class="grid-label" id="label-seasons">Seasons</div>
+                    <div id="drop-season-1" data-correct-word="Rainy" class="drop-zone" style="grid-column: 2;"></div>
+                    <div id="drop-season-2" data-correct-word="Winter" class="drop-zone" style="grid-column: 3;"></div>
+                    <div id="drop-season-3" data-correct-word="Summer" class="drop-zone" style="grid-column: 4;"></div> 
+
+                    <div class="grid-label" id="label-weather">Weather</div>
+                    <div id="drop-weather-1" data-correct-word="Wet" class="drop-zone" style="grid-column: 2;"></div>
+                    <div id="drop-weather-2" data-correct-word="Cold" class="drop-zone" style="grid-column: 3;"></div>
+                    <div id="drop-weather-3" data-correct-word="Hot" class="drop-zone" style="grid-column: 4;"></div>
+
+                    <div class="grid-label" id="label-clothes">Clothes</div>
+                    <div id="drop-clothes-1" data-correct-word="Waterproof" class="drop-zone" style="grid-column: 2;"></div>
+                    <div id="drop-clothes-2" data-correct-word="Woolen" class="drop-zone" style="grid-column: 3;"></div>
+                    <div id="drop-clothes-3" data-correct-word="Cotton" class="drop-zone" style="grid-column: 4;"></div>
+                </div>
+
+                <div id="word-bank-container">
+                    <div id="word-bank">
+                        </div>
+                </div>
+
+            </div> </div>
+
+        <div id="success-screen" class="success-screen-content hidden">
+            <h1>You are Good</h1>
+            
+            <img src="Screenshot (1645).png" alt="Penguins celebrating success" class="bouncing-image">
+            
+            <button id="home-btn-success" aria-label="Go to Start Screen">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#f97316" viewBox="0 0 256 256"><path d="M240,112.23V208a16,16,0,0,1-16,16H160a16,16,0,0,1-16-16V168a8,8,0,0,0-8-8H120a8,8,0,0,0-8,8v40a16,16,0,0,1-16,16H32a16,16,0,0,1-16-16V112.23a16,16,0,0,1,5.15-11.59l88-81.12a16,16,0,0,1,21.7,0l88,81.12A16,16,0,0,1,240,112.23Z"></path></svg>
+            </button>
+        </div>
+
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const startScreen = document.getElementById('start-screen');
+            const gameScreen = document.getElementById('game-screen');
+            const successScreen = document.getElementById('success-screen');
+
+            const startBtn = document.getElementById('start-btn');
+            const homeBtnGame = document.getElementById('home-btn-game');
+            const homeBtnSuccess = document.getElementById('home-btn-success');
+
+            const wordBank = document.getElementById('word-bank');
+            const dropZones = document.querySelectorAll('.drop-zone');
+
+            let correctPlacements = 0;
+            const totalPlacements = 9;
+            const words = ['Cotton', 'Cold', 'Wet', 'Summer', 'Woolen', 'Winter', 'Hot', 'Rainy', 'Waterproof'];
+
+            const solutions = {};
+            dropZones.forEach(zone => {
+                solutions[zone.id] = zone.dataset.correctWord;
+            });
+            
+            let currentDragEl = null; 
+            
+            // --- Audio Implementation using Web Audio API ---
+            let audioContext;
+            let audioReady = false;
+
+            const initAudio = () => {
+                if (audioReady) return;
+                try {
+                    // Create audio context only after user gesture
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    audioReady = true;
+                    console.log("Web Audio API context started.");
+                } catch (e) {
+                    console.error("Web Audio API not supported or failed to start:", e);
+                }
+            };
+
+            const createOscillator = (freq, type, duration, gainValue) => {
+                if (!audioReady) return;
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioContext.currentTime);
+                
+                gain.gain.setValueAtTime(0, audioContext.currentTime);
+                gain.gain.linearRampToValueAtTime(gainValue, audioContext.currentTime + 0.01);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
+
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+                osc.start();
+                osc.stop(audioContext.currentTime + duration);
+            };
+
+            function playCorrectSound() {
+                // Short, cheerful, multi-note sequence (C5-E5-G5-C6) for a "clapping/celebration" effect
+                createOscillator(523.25, 'triangle', 0.08, 0.4); // C5
+                setTimeout(() => createOscillator(659.25, 'triangle', 0.08, 0.4), 80); // E5
+                setTimeout(() => createOscillator(783.99, 'triangle', 0.08, 0.4), 160); // G5
+                setTimeout(() => createOscillator(1046.50, 'triangle', 0.15, 0.4), 240); // C6
+            }
+
+            function playWrongSound() {
+                // Harsh, low tone (A3-F#3)
+                createOscillator(200, 'square', 0.15, 0.5);
+                setTimeout(() => createOscillator(150, 'square', 0.15, 0.5), 100);
+            }
+            
+            function playFanfare() {
+                // Success chord (G4-B4-D5)
+                createOscillator(392, 'sine', 0.5, 0.3); 
+                createOscillator(493.88, 'sine', 0.5, 0.3); 
+                createOscillator(587.33, 'sine', 0.5, 0.3); 
+            }
+
+            // --- Game State Functions ---
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+
+            function initializeGame() {
+                correctPlacements = 0;
+                wordBank.innerHTML = '';
+                dropZones.forEach(zone => {
+                    zone.innerHTML = '';
+                    zone.classList.remove('placed');
+                    zone.classList.remove('drag-over');
+                });
+                
+                const shuffledWords = shuffleArray([...words]);
+                shuffledWords.forEach(word => {
+                    const wordEl = document.createElement('div');
+                    wordEl.id = `drag-${word}`;
+                    wordEl.textContent = word;
+                    wordEl.draggable = true;
+                    wordEl.className = 'draggable'; 
+                    wordBank.appendChild(wordEl);
+                });
+
+                addDragListeners();
+            }
+
+            function showScreen(screen) {
+                startScreen.classList.add('hidden');
+                gameScreen.classList.add('hidden');
+                successScreen.classList.add('hidden');
+                
+                screen.classList.remove('hidden');
+            }
+            
+            function startGame() {
+                initAudio(); 
+                initializeGame();
+                showScreen(gameScreen);
+            }
+
+            function resetGame() {
+                showScreen(startScreen); 
+            }
+
+            // --- Drag and Drop Logic (Desktop) ---
+            function addDragListeners() {
+                const draggables = document.querySelectorAll('.draggable');
+                draggables.forEach(draggable => {
+                    draggable.addEventListener('dragstart', handleDragStart);
+                    draggable.addEventListener('dragend', handleDragEnd);
+                    draggable.addEventListener('touchstart', handleTouchStart, {passive: false});
+                    draggable.addEventListener('touchmove', handleTouchMove, {passive: false});
+                    draggable.addEventListener('touchend', handleTouchEnd);
+                });
+            }
+
+            function handleDragStart(e) {
+                e.dataTransfer.setData('text/plain', e.target.id);
+                setTimeout(() => {
+                    e.target.classList.add('dragging');
+                }, 0);
+            }
+
+            function handleDragEnd(e) {
+                if (e.target) e.target.classList.remove('dragging');
+            }
+
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', handleDragOver);
+                zone.addEventListener('dragleave', handleDragLeave);
+                zone.addEventListener('drop', handleDrop);
+            });
+
+            function handleDragOver(e) {
+                e.preventDefault();
+                if (e.target.closest('.drop-zone') && e.target.closest('.drop-zone').childElementCount === 0) {
+                    e.target.closest('.drop-zone').classList.add('drag-over');
+                }
+            }
+            
+            function handleDragLeave(e) {
+                e.target.classList.remove('drag-over');
+            }
+
+            function handleDrop(e) {
+                e.preventDefault();
+                const dropZone = e.target.closest('.drop-zone');
+                
+                const draggedId = e.dataTransfer.getData('text/plain');
+                const draggedEl = document.getElementById(draggedId);
+
+                if (dropZone && dropZone.childElementCount === 0) {
+                    dropZone.classList.remove('drag-over');
+                    if (draggedEl) {
+                        checkAndPlace(draggedEl, dropZone);
+                    } else {
+                        playWrongSound(); 
+                    }
+                } else {
+                    if (dropZone) dropZone.classList.remove('drag-over');
+                    playWrongSound(); 
+                }
+            }
+            
+            // --- Touch Drag and Drop Logic (Mobile) ---
+
+            function getTouchTarget(e) {
+                const touch = e.touches[0] || e.changedTouches[0];
+                return document.elementFromPoint(touch.clientX, touch.clientY);
+            }
+            
+            function handleTouchStart(e) {
+                e.preventDefault(); 
+                currentDragEl = e.target;
+                const rect = currentDragEl.getBoundingClientRect();
+                const touch = e.touches[0];
+
+                currentDragEl.startX = touch.clientX;
+                currentDragEl.startY = touch.clientY;
+                currentDragEl.initialX = rect.left;
+                currentDragEl.initialY = rect.top;
+
+                document.body.appendChild(currentDragEl);
+                currentDragEl.classList.add('dragging');
+                currentDragEl.style.position = 'fixed';
+                currentDragEl.style.left = currentDragEl.initialX + 'px';
+                currentDragEl.style.top = currentDragEl.initialY + 'px';
+                currentDragEl.style.zIndex = 1000;
+            }
+
+            function handleTouchMove(e) {
+                e.preventDefault();
+                if (!currentDragEl) return;
+
+                const touch = e.touches[0];
+                
+                const deltaX = touch.clientX - currentDragEl.startX;
+                const deltaY = touch.clientY - currentDragEl.startY;
+                
+                currentDragEl.style.left = (currentDragEl.initialX + deltaX) + 'px';
+                currentDragEl.style.top = (currentDragEl.initialY + deltaY) + 'px';
+
+                const target = getTouchTarget(e);
+                dropZones.forEach(zone => zone.classList.remove('drag-over'));
+                if (target && target.closest('.drop-zone') && target.closest('.drop-zone').childElementCount === 0) {
+                    target.closest('.drop-zone').classList.add('drag-over');
+                }
+            }
+
+            function handleTouchEnd(e) {
+                if (!currentDragEl) return;
+                
+                const dropTarget = getTouchTarget(e);
+                const dropZone = dropTarget ? dropTarget.closest('.drop-zone') : null;
+
+                dropZones.forEach(zone => zone.classList.remove('drag-over'));
+                
+                if (dropZone && dropZone.childElementCount === 0) {
+                    checkAndPlace(currentDragEl, dropZone);
+                } else {
+                    playWrongSound(); 
+                    wordBank.appendChild(currentDragEl);
+                }
+                
+                currentDragEl.classList.remove('dragging');
+                currentDragEl.style.position = '';
+                currentDragEl.style.left = '';
+                currentDragEl.style.top = '';
+                currentDragEl.style.zIndex = '';
+                currentDragEl = null; 
+            }
+
+
+            // --- Core Placement Logic ---
+            function checkAndPlace(draggedEl, dropZone) {
+                const draggedWord = draggedEl.id.replace('drag-', '');
+                const dropZoneId = dropZone.id;
+                
+                if (solutions[dropZoneId] === draggedWord) {
+                    playCorrectSound();
+                    
+                    dropZone.appendChild(draggedEl);
+                    draggedEl.draggable = false;
+                    
+                    // Remove touch listeners once placed
+                    draggedEl.removeEventListener('touchstart', handleTouchStart);
+                    draggedEl.removeEventListener('touchmove', handleTouchMove);
+                    draggedEl.removeEventListener('touchend', handleTouchEnd);
+                    
+                    draggedEl.className = 'placed'; 
+                    dropZone.classList.add('placed');
+
+                    correctPlacements++;
+                    
+                    if (correctPlacements === totalPlacements) {
+                        playFanfare();
+                        setTimeout(() => showScreen(successScreen), 1000); 
+                    }
+                } else {
+                    playWrongSound();
+                    wordBank.appendChild(draggedEl); 
+                }
+            }
+
+            
+            // --- Event Listeners ---
+            startBtn.addEventListener('click', startGame);
+            homeBtnGame.addEventListener('click', resetGame);
+            homeBtnSuccess.addEventListener('click', resetGame);
+            
+            // This ensures audio context attempts to start on the first user interaction
+            document.body.addEventListener('click', initAudio, { once: true });
+        });
+    </script>
+
+</body>
+</html>
