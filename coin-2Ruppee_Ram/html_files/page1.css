@@ -1,0 +1,74 @@
+body {
+  background-color: #ffffff;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* Home icon at top right */
+.home-icon {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+}
+
+.home-icon img {
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+}
+
+/* Center content */
+.center-content {
+  text-align: center;
+}
+
+.center-content h1 {
+  font-size: 2.5rem;
+  color: #056b6b;
+  margin-bottom: 30px;
+}
+
+/* Start button */
+.start-btn {
+  display: inline-block;
+  text-decoration: none;
+  color: #333;
+  background: #c2f0d4;
+  border: 3px solid #67c4a7;
+  border-radius: 40px;
+  padding: 15px 50px;
+  font-size: 1.5rem;
+  transition: 0.2s;
+}
+
+.start-btn:hover {
+  background: #a8e6c4;
+}
+
+/* Bottom Left Text */
+.bottom-left {
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+  font-weight: bold;
+  color: #0074a2;
+}
+
+/* Bottom Right Logo */
+.bottom-right {
+  position: absolute;
+  bottom: 10px;
+  right: 30px;
+}
+
+.bottom-right img {
+  width: 120px;
+}

@@ -1,0 +1,131 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+  background-color: black;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+/* Main container */
+.main-container {
+  background-color: white;
+  width: 85%;
+  max-width: 1000px;
+  min-height: 90vh;
+  border: 2px solid teal;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* ✅ Keeps content + footer apart */
+  align-items: center;
+  padding: 20px;
+}
+
+/* Heading */
+h1 {
+  color: #1c8b68;
+  font-size: 2.2rem;
+  margin-top: 40px;
+  text-align: center;
+}
+
+/* Triangle button */
+.triangle-btn {
+  position: relative;
+  display: inline-block;
+  padding: 30px 28px;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  background: linear-gradient(135deg, #0077b6, #003f6b);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.triangle-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #0096c7, #004b87);
+}
+
+.next-link {
+  text-decoration: none;
+}
+
+/* Footer - always at the bottom */
+.bottom-text {
+  width: 90%;
+  display: flex;
+  justify-content: space-between; /* ✅ Side by side */
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.footer-left {
+  font-weight: bold;
+  color: #0066cc;
+  font-size: 1rem;
+}
+
+.footer-right {
+  text-align: right;
+}
+
+.footer-right img {
+  width: 90px;
+  margin-bottom: 5px;
+}
+
+.footer-right p {
+  font-size: 0.9rem;
+  color: #000;
+}
+
+/* ---------------------------- */
+/* Responsive Design */
+/* ---------------------------- */
+
+/* Tablets */
+@media (max-width: 768px) {
+  .main-container {
+    width: 90%;
+    min-height: 90vh;
+  }
+
+  .bottom-text {
+    gap: 20px;
+    flex-direction: row; /* ✅ Keep side-by-side on tablet */
+  }
+}
+
+/* Mobile Phones */
+@media (max-width: 480px) {
+  body {
+    padding: 20px;
+  }
+
+  .main-container {
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  .bottom-text {
+    flex-direction: column; /* ✅ Only on small screens */
+    gap: 10px;
+    text-align: center;
+  }
+
+  .footer-right img {
+    width: 70px;
+  }
+}

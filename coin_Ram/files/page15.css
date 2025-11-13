@@ -1,0 +1,227 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.container {
+  width: 90%;
+  max-width: 1000px;
+  height: 90vh;
+  border: 2px solid teal;
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25px;
+}
+
+/* Home Button */
+.home-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+}
+.home-btn img {
+  width: 50px;
+}
+
+/* Stars */
+.stars {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+}
+.stars img {
+  width: 150px;
+}
+
+/* Game Area */
+.game-area {
+  text-align: center;
+  margin-top: 100px;
+}
+
+/* Coin Rows */
+.coins-row {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+.coins-line {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+.coins-line img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  cursor: grab;
+  transition: transform 0.2s ease;
+}
+.coins-line img:active {
+  transform: scale(1.05);
+  cursor: grabbing;
+}
+
+/* Task Section */
+.task {
+  font-size: 1.5rem;
+  color: #0066cc;
+}
+
+/* Equation Layout */
+.equation-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+.equation-line img {
+  width: 80px;
+  height: 80px;
+}
+
+/* Drop Boxes */
+.boxes-inline {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+.drop-box {
+  width: 100px;
+  height: 100px;
+  background: #e6f7f7;
+  border: 2px solid #339999;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.drop-box img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+.drop-box.dragover {
+  background-color: #b3f0d1;
+}
+
+/* --- Responsive for Tablets (≤ 768px) --- */
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+    height: auto;
+    padding: 20px 10px;
+  }
+
+  .stars img {
+    width: 120px;
+  }
+
+  .home-btn img {
+    width: 45px;
+  }
+
+  .coins-line img,
+  .equation-line img {
+    width: 65px;
+    height: 65px;
+  }
+
+  .drop-box {
+    width: 80px;
+    height: 80px;
+  }
+
+  .task {
+    font-size: 1.3rem;
+  }
+
+  .equation-line {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+/* --- Responsive for Small Mobiles (≤ 430px) --- */
+@media (max-width: 430px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .container {
+    width: 95%;
+    height: auto;
+    padding: 15px 5px;
+    margin-top: 15px;
+  }
+
+  .stars img {
+    width: 90px;
+  }
+
+  .home-btn img {
+    width: 35px;
+  }
+
+  .game-area {
+    margin-top: 60px;
+  }
+
+  .coins-row {
+    gap: 15px;
+    margin-bottom: 25px;
+  }
+
+  .coins-line img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .task {
+    font-size: 1rem;
+  }
+
+  .equation-line {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .boxes-inline {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .drop-box {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+  }
+
+  .equation-line img {
+    width: 60px;
+    height: 60px;
+  }
+
+  span {
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,119 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  position: relative;
+  height: 90vh;
+  width: 100%;
+  max-width: 900px;
+  border: 3px solid #009999;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Home button */
+.home-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.home-icon {
+  width: 60px;
+  height: auto;
+}
+
+/* Coin section */
+.coin-section {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.coin-image {
+  width: 80%;
+  max-width: 140px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.coin-section h2 {
+  font-size: 2rem;
+  color: #007b5e;
+}
+
+/* Navigation buttons */
+.nav-buttons {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 40px;
+}
+
+.nav-btn {
+  background-color: #0074b8;
+  color: white;
+  padding: 25px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  text-decoration: none;
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+.nav-btn:hover {
+  background-color: #005f8a;
+}
+
+.back {
+  clip-path: polygon(100% 0%, 0% 50%, 100% 100%);
+}
+
+.next {
+  clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+}
+
+/* 📱 Responsive adjustments */
+@media (max-width: 600px) {
+  .coin-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .nav-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 0;
+  }
+
+  .nav-btn {
+    width: 30%;
+    text-align: center;
+  }
+
+  .home-icon {
+    width: 50px;
+  }
+
+  .coin-image {
+    width: 60%;
+  }
+}

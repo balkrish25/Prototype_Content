@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Count the Coins</title>
+  <link rel="stylesheet" href="page4.css" />
+</head>
+<body>
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="stars"><img src="/assests/0-rating.png" alt=""></div>
+    <a href="page1.html" class="home-icon">
+      <img src="/assests/home.png.png" alt="Home" />
+    </a>
+  </div>
+
+  <!-- Coins -->
+  <div class="coins-container">
+    <img src="/assests/1-rupee.png" id="coin1" class="coin" data-value="1" draggable="true" />
+    <img src="/assests/2-rupee.png" id="coin2" class="coin" data-value="2" draggable="true" />
+    <img src="/assests/5-rupee.png" id="coin5" class="coin" data-value="5" draggable="true" />
+    <img src="/assests/10-rupee.png" id="coin10" class="coin" data-value="10" draggable="true" />
+  </div>
+
+  <!-- Blue divider -->
+  <hr class="blue-line" />
+
+  <!-- Text and drop boxes -->
+  <div class="equation">
+    <h2><span class="blue">3 Rupees =</span></h2>
+    <div class="drop-area">
+      <div class="drop-box" id="box1"></div>
+      <span class="plus">+</span>
+      <div class="drop-box" id="box2"></div>
+    </div>
+  </div>
+
+  <!-- Bottom text -->
+  <div class="bottom-text">
+    3 Rupees = 2 Rupee + 1 Rupee
+  </div>
+
+  <!-- Sounds -->
+  <audio id="clapSound" src="clap.mp3"></audio>
+  <audio id="hissSound" src="hiss.mp3"></audio>
+
+  <script src="/html_files/page4.js"></script>
+</body>
+</html>

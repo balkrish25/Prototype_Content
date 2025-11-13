@@ -1,0 +1,99 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  font-family: "Poppins", sans-serif;
+  padding: 20px;
+}
+
+#container {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  height: 90vh;
+  max-width: 800px;
+  border: 2px solid rgb(4, 214, 246);
+  padding: 40px 20px;
+  position: relative;
+}
+
+/* Home button */
+.home-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.home-btn img {
+  height: 50px;
+  width: auto;
+}
+
+/* Content container */
+.container {
+  text-align: center;
+}
+
+.container h1 {
+  font-size: 2rem;
+  color: #0066cc;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.start-btn {
+  display: inline-block;
+  text-decoration: none;
+  background-color: #e0e6f7;
+  color: #333;
+  font-weight: bold;
+  padding: 15px 40px;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  border: 2px solid #ccd4f2;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: 0.3s ease;
+}
+
+.start-btn:hover {
+  background-color: #c9d6f7;
+  transform: scale(1.05);
+}
+
+/* 📱 Responsive tweaks */
+@media (max-width: 600px) {
+  #container {
+    width: 100%;
+    padding: 20px;
+    margin: 0;
+  }
+
+  .container h1 {
+    font-size: 1.5rem;
+  }
+
+  .start-btn {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
+
+  .home-btn {
+    top: 10px;
+    right: 10px;
+  }
+
+  .home-btn img {
+    height: 40px;
+  }
+}

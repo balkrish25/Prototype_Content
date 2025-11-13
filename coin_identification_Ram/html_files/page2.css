@@ -1,0 +1,140 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  width: 90%;
+  max-width: 1100px;
+  text-align: center;
+  border: 2px solid #00a37a;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.header h1 {
+  color: #008651;
+  font-size: 1.8rem;
+  flex: 1;
+  text-align: center;
+}
+
+.next-btn {
+  background: #0086c9;
+  color: white;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.next-btn:hover {
+  background: #005a8c;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.coins, .notes {
+  width: 45%;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.coins img, .notes img {
+  width: 90px;
+  height: auto;
+  margin: 10px;
+}
+
+.divider {
+  width: 2px;
+  background: gray;
+  height: 350px;
+  margin: 0 auto;
+}
+
+.coin-text, .note-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ff5c5c;
+  margin-top: 20px;
+}
+
+.bottom-text {
+  margin-top: 30px;
+  color: #008651;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.triangle-btn {
+  position: relative;
+  display: inline-block;
+  padding: 30px 28px;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  background: linear-gradient(135deg, #0077b6, #003f6b);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.triangle-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #0096c7, #004b87);
+}
+
+.next-link {
+  text-decoration: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .divider {
+    display: none;
+  }
+
+  .coins, .notes {
+    width: 100%;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .header h1 {
+    font-size: 1.5rem;
+  }
+}

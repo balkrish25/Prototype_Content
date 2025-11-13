@@ -1,0 +1,258 @@
+/* ---------- Base Styles ---------- */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  background-color: black;
+}
+
+.container {
+  background-color: white;
+  width: 90%;
+  max-width: 1000px;
+  height: 90vh;
+  border: 2px solid teal;
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25px;
+  box-sizing: border-box;
+}
+
+/* Home Button */
+.home-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+}
+.home-btn img {
+  width: 50px;
+}
+
+/* Stars */
+.stars {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  display: flex;
+  gap: 5px;
+}
+.stars img {
+  width: 150px;
+}
+
+/* Game Area */
+.game-area {
+  text-align: center;
+  margin-top: 100px;
+  width: 100%;
+}
+
+/* Coins Row */
+.coins {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 50px;
+}
+.coins img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  cursor: grab;
+  transition: transform 0.2s ease;
+}
+.coins img:active {
+  transform: scale(1.05);
+  cursor: grabbing;
+}
+
+/* Task Section */
+.task {
+  font-size: 1.5rem;
+  color: #0066cc;
+}
+
+/* Equation Line */
+.equation-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.equation-label {
+  font-size: 1.5rem;
+  color: #0066cc;
+}
+
+.plus {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0066cc;
+}
+
+/* Boxes Inline */
+.boxes-inline {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+/* Drop Boxes */
+.drop-box {
+  width: 100px;
+  height: 100px;
+  background: #e6f7f7;
+  border: 2px solid #339999;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.drop-box img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+.drop-box.dragover {
+  background-color: #b3f0d1;
+}
+
+/* Subtext */
+.subtext {
+  font-size: 1.2rem;
+  color: green;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* ---------- Responsive Styles ---------- */
+
+/* Tablets (max-width: 768px) */
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .stars img {
+    width: 120px;
+  }
+
+  .home-btn img {
+    width: 45px;
+  }
+
+  .coins img {
+    width: 65px;
+    height: 65px;
+  }
+
+  .drop-box {
+    width: 80px;
+    height: 80px;
+  }
+
+  .task {
+    font-size: 1.2rem;
+  }
+
+  .equation-label {
+    font-size: 1.3rem;
+  }
+
+  .plus {
+    font-size: 1.3rem;
+  }
+
+  .subtext {
+    font-size: 1rem;
+  }
+}
+
+/* Mobiles (max-width: 430px) */
+@media (max-width: 430px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .container {
+    width: 95%;
+    height: auto;
+    padding: 15px 10px;
+    margin-top: 10px;
+  }
+
+  .stars img {
+    width: 90px;
+  }
+
+  .home-btn img {
+    width: 35px;
+  }
+
+  .game-area {
+    margin-top: 60px;
+  }
+
+  .coins {
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+
+  .coins img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .task {
+    font-size: 1rem;
+  }
+
+  .equation-line {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .boxes-inline {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    gap: 10px;
+  }
+
+  .drop-box {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+  }
+
+  .plus {
+    display: none;
+  }
+
+  .equation-label {
+    font-size: 1.1rem;
+  }
+
+  .subtext {
+    font-size: 0.9rem;
+    text-align: center;
+  }
+}

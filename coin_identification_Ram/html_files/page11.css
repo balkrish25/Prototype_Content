@@ -1,0 +1,129 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.game-frame {
+  background: white;
+  width: 90%;
+  max-width: 1200px;
+  height: 90%;
+  border-left: 3px solid #009c9c;
+  border-right: 3px solid #009c9c;
+  border-bottom: 3px solid #009c9c;
+  position: relative;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+}
+
+.home-btn img {
+  width: 60px;
+  height: 60px;
+}
+
+.stars {
+  position: absolute;
+  top: 15px;
+  left: 30px;
+}
+
+.stars img {
+  width: 150px;
+}
+
+.title {
+  color: #0074d9;
+  font-size: 28px;
+  font-weight: 600;
+  margin-top: 70px;
+}
+
+.question-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 60px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.question {
+  font-size: 28px;
+  font-weight: bold;
+  color: black;
+}
+
+.drop-zone {
+  width: 120px;
+  height: 120px;
+  border: 3px solid #0074d9;
+  background-color: #e4f2f5;
+  position: relative;
+  overflow: hidden;
+}
+
+.coins {
+  border-top: 2px solid #00a6a6;
+  margin-top: auto;
+  padding-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.coin {
+  width: 80px;
+  height: 80px;
+  cursor: grab;
+  transition: transform 0.2s;
+}
+
+.coin:active {
+  transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .title {
+    font-size: 22px;
+  }
+
+  .question {
+    font-size: 22px;
+  }
+
+  .drop-zone {
+    width: 90px;
+    height: 90px;
+  }
+
+  .coin {
+    width: 60px;
+    height: 60px;
+  }
+
+  .home-btn img {
+    width: 45px;
+    height: 45px;
+  }
+}

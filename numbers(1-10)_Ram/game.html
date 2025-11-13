@@ -1,0 +1,333 @@
+
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn Numbers Game</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: white;
+      text-align: center;
+    }
+
+    /* ---------------- HOME PAGE ---------------- */
+    #homePage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      position: relative;
+    }
+
+    .main-title {
+      color: #0040ff;
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .sub-title {
+      color: #2bcb63;
+      font-size: 22px;
+      margin-bottom: 30px;
+    }
+
+    .start-btn {
+      background-color: white;
+      border: 2px solid #a6d8ff;
+      color: #0040ff;
+      font-size: 22px;
+      padding: 10px 40px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+      transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .start-btn:hover {
+      background-color: #e6f3ff;
+      transform: scale(1.05);
+    }
+
+    /* --- FOOTER TEXT (LEFT) --- */
+    .footer-text {
+      position: absolute;
+      bottom: 30px;
+      left: 20px;
+      font-size: 18px;
+      color: #333;
+      font-weight: 500;
+    }
+
+    /* --- LOGO (RIGHT) --- */
+    .logo {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      width: 120px;
+      height: auto;
+    }
+
+    /* ---------------- GAME PAGE ---------------- */
+    #gamePage {
+      display: none;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .stars {
+      margin-top: 20px;
+    }
+
+    .star {
+      font-size: 40px;
+      color: #00c9a7;
+      cursor: pointer;
+      transition: transform 0.2s, color 0.3s;
+    }
+
+    .star:hover {
+      transform: scale(1.2);
+    }
+
+    .star.active {
+      color: #128a12;
+    }
+
+    .content {
+      margin-top: 40px;
+    }
+
+    .title {
+      font-size: 26px;
+      color: #ff6666;
+      font-weight: bold;
+    }
+
+    .number {
+      font-size: 80px;
+      color: #0066cc;
+      margin: 40px 0;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .nav-btn img {
+      width: 80px;
+      height: 80px;
+    }
+
+    .nav-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .home {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 60px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .home:hover {
+      transform: scale(1.1);
+    }
+
+    .win-message {
+      font-size: 36px;
+      color: rgb(171, 35, 56);
+      font-weight: bold;
+      margin-top: 40px;
+      display: none;
+    }
+
+    /* ---------------- RESPONSIVE ---------------- */
+    @media (max-width: 600px) {
+      .star {
+        font-size: 28px;
+      }
+
+      .number {
+        font-size: 60px;
+      }
+
+      .nav-btn img {
+        width: 60px;
+        height: 60px;
+      }
+
+      .home {
+        width: 45px;
+      }
+
+      .footer-text {
+        font-size: 14px;
+        bottom: 25px;
+        left: 15px;
+      }
+
+      .logo {
+        width: 90px;
+        right: 15px;
+        bottom: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HOME PAGE -->
+  <div id="homePage">
+    <div class="main-title">Let us Learn the Numbers</div>
+    <div class="sub-title">(1 to 10)</div>
+    <button class="start-btn" id="startBtn">Start</button>
+
+    <!-- Bottom-left text -->
+    <h3 class="footer-text">Prototype Content - Preprimary Level</h3>
+
+    <!-- Bottom-right logo -->
+    <img class="logo" src="/assests/default_logo.png" alt="e-SAadhya Logo">
+  </div>
+
+  <!-- GAME PAGE -->
+  <div id="gamePage">
+    <div class="stars" id="stars"></div>
+    <img class="home" id="homeBtn" src="assests/home.png.png" alt="Home">
+    <div class="content">
+      <div class="title" id="title">Read and Learn the number</div>
+      <div class="number" id="numberDisplay">1 = One</div>
+      <div class="buttons">
+        <button class="nav-btn" id="backBtn" disabled>
+          <img src="/assests/back-button-icon-8.jpg" alt="Back">
+        </button>
+        <button class="nav-btn" id="nextBtn">
+          <img src="/assests/next_image-removebg-preview.png" alt="Next">
+        </button>
+      </div>
+      <div class="win-message" id="winMessage">🎉 You Won! 🎉</div>
+    </div>
+  </div>
+
+  <!-- ---------------- SCRIPT ---------------- -->
+  <script>
+    const homePage = document.getElementById('homePage');
+    const gamePage = document.getElementById('gamePage');
+    const startBtn = document.getElementById('startBtn');
+    const homeBtn = document.getElementById('homeBtn');
+
+    const totalNumbers = 10;
+    const numbers = [
+      "1 = One", "2 = Two", "3 = Three", "4 = Four", "5 = Five",
+      "6 = Six", "7 = Seven", "8 = Eight", "9 = Nine", "10 = Ten"
+    ];
+
+    let current = 0;
+
+    const starsContainer = document.getElementById('stars');
+    const numberDisplay = document.getElementById('numberDisplay');
+    const nextBtn = document.getElementById('nextBtn');
+    const backBtn = document.getElementById('backBtn');
+    const winMessage = document.getElementById('winMessage');
+    const title = document.getElementById('title');
+
+    // Create stars dynamically
+    for (let i = 0; i < totalNumbers; i++) {
+      const star = document.createElement('span');
+      star.innerHTML = '★';
+      star.classList.add('star');
+      star.addEventListener('click', () => handleStarClick(i));
+      starsContainer.appendChild(star);
+    }
+
+    const stars = document.querySelectorAll('.star');
+
+    function handleStarClick(index) {
+      current = index;
+      updateStars(index);
+      showNumber(index);
+    }
+
+    function updateStars(index) {
+      stars.forEach((star, i) => {
+        star.classList.toggle('active', i <= index);
+      });
+    }
+
+    function showNumber(index) {
+      numberDisplay.textContent = numbers[index];
+      winMessage.style.display = 'none';
+      numberDisplay.style.display = 'block';
+      nextBtn.style.display = 'inline-block';
+      backBtn.style.display = 'inline-block';
+      title.style.display = 'block';
+      backBtn.disabled = current === 0;
+    }
+
+    nextBtn.addEventListener('click', () => {
+      if (current < totalNumbers - 1) {
+        current++;
+        showNumber(current);
+        updateStars(current);
+      } else {
+        showWinMessage();
+      }
+    });
+
+    backBtn.addEventListener('click', () => {
+      if (current > 0) {
+        current--;
+        showNumber(current);
+        updateStars(current);
+      }
+    });
+
+    function showWinMessage() {
+      winMessage.style.display = 'block';
+      numberDisplay.style.display = 'none';
+      nextBtn.style.display = 'none';
+      backBtn.style.display = 'none';
+      title.style.display = 'none';
+      updateStars(totalNumbers - 1);
+    }
+
+    // Switch pages
+    startBtn.addEventListener('click', () => {
+      homePage.style.display = 'none';
+      gamePage.style.display = 'block';
+      current = 0;
+      showNumber(current);
+      updateStars(-1);
+      backBtn.disabled = true;
+    });
+
+    homeBtn.addEventListener('click', () => {
+      gamePage.style.display = 'none';
+      homePage.style.display = 'flex';
+      current = 0;
+      updateStars(-1);
+      showNumber(0);
+      winMessage.style.display = 'none';
+    });
+  </script>
+</body>
+</html>

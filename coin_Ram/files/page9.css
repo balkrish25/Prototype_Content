@@ -1,0 +1,119 @@
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  background-color: white;
+  width: 95%;
+  max-width: 1000px;
+  border: 2px solid teal;
+  position: relative;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Stars */
+.stars img {
+  width: 150px;
+  position: absolute;
+  top: 10px;
+  left: 20px;
+}
+
+/* Home icon */
+.home-link {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.home-icon {
+  width: 60px;
+  height: 60px;
+  transition: transform 0.3s ease;
+}
+.home-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Donald Duck */
+.duck {
+  margin-top: 100px;
+}
+.donald-img {
+  width: 220px;
+  animation: bounce 2s ease-in-out 3;
+}
+
+/* @keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-60px); }
+  50% { transform: translateY(0); }
+  70% { transform: translateY(-30px); }
+} */
+
+/* Text */
+.text {
+  color: #4b7b00;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+/* Button */
+.play-btn {
+  display: inline-block;
+  margin-top: 30px;
+  background-color: #a7e2e6;
+  border: 2px solid #6dc9cf;
+  color: black;
+  padding: 10px 25px;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.3s;
+}
+.play-btn:hover {
+  background-color: #90d3d8;
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .donald-img {
+    width: 180px;
+  }
+  .text {
+    font-size: 1.6rem;
+  }
+  .home-icon {
+    width: 45px;
+    height: 45px;
+  }
+  .stars img {
+    width: 120px;
+  }
+}
+@media (max-width: 480px) {
+  .donald-img {
+    width: 150px;
+  }
+  .text {
+    font-size: 1.3rem;
+  }
+  .play-btn {
+    font-size: 1rem;
+    padding: 8px 20px;
+  }
+}
