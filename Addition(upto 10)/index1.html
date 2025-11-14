@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Complete the Additions Game</title>
+    <!-- Tailwind CSS for utility classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style1.css" />
+  </head>
+
+  <!-- body -->
+
+  <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div
+      id="game-container"
+      class="relative w-full max-w-3xl aspect-video bg-white border-8 border-cyan-300 rounded-2xl shadow-lg p-6 flex flex-col items-center justify-center overflow-hidden"
+    >
+      <!-- Start Screen -->
+      <div id="start-screen" class="text-center space-y-8">
+        <h1
+          class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-green-700"
+        >
+          Complete the Additions
+        </h1>
+        <button
+          id="start-btn"
+          class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-10 rounded-full text-xl md:text-2xl shadow-lg transition-transform transform hover:scale-105"
+        >
+          Start
+        </button>
+
+        <img
+          src="assets/default_logo.png"
+          alt="CDAC,KP,BANGALORE"
+          class="absolute bottom-4 right-6 w-20 sm:w-24 md:w-28"
+        />
+
+        <div class="absolute bottom-4 text-left w-full left-0 ml-5">
+          <p class="text-sm text-gray-500">
+            Prototype Content - Secondary Level
+          </p>
+        </div>
+      </div>
+
+      <!-- Game Screen -->
+      <div id="game-screen" class="hidden w-full h-full flex flex-col">
+        <!-- Header: Stars, Home Icon -->
+        <header class="w-full flex justify-between items-center p-2">
+          <div id="stars-container" class="flex space-x-1 sm:space-x-2">
+            <!-- Stars will be dynamically generated here -->
+          </div>
+          <button id="home-btn">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-8 w-8 text-red-500 hover:text-red-600"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"
+              />
+            </svg>
+          </button>
+        </header>
+
+        <!-- Main Content: Question, Options -->
+        <main
+          class="flex-grow flex flex-col items-center justify-center space-y-4 sm:space-y-6 md:space-y-8"
+        >
+          <p class="text-blue-600 text-lg md:text-xl font-semibold">
+            Click on the right answer
+          </p>
+          <div
+            id="question-container"
+            class="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-800"
+          >
+            <span id="num1"></span> + <span id="num2"></span> = ?
+          </div>
+          <div
+            id="options-container"
+            class="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-6 pt-4"
+          >
+            <!-- Options will be dynamically generated here -->
+          </div>
+        </main>
+      </div>
+
+      <!-- Feedback Screen -->
+      <div
+        id="feedback-screen"
+        class="hidden absolute inset-0 bg-white bg-opacity-90 flex flex-col items-center justify-center space-y-6"
+      >
+        <p id="feedback-text" class="text-4xl md:text-5xl font-bold"></p>
+        <button
+          id="next-btn"
+          class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-8 rounded-full text-lg md:text-xl shadow-lg transition-transform transform hover:scale-105"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M14 5l7 7m0 0l-7 7m7-7H3"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <!-- End Screen -->
+      <div
+        id="end-screen"
+        class="hidden text-center flex flex-col items-center justify-center space-y-4"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-32 w-32 text-yellow-400"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        <p class="text-3xl md:text-4xl font-bold text-green-500">Great Job!</p>
+        <div id="final-stars-container" class="flex space-x-2"></div>
+      </div>
+    </div>
+
+    <!-- Game Logic Script -->
+    <script src="app1.js"></script>
+  </body>
+</html>

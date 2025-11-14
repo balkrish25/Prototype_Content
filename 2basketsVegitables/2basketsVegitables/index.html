@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learn the Vegetables</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="game-container">
+      <div id="start-screen" class="screen active">
+        <h1>Let us learn about the Vegetables</h1>
+        <button id="start-btn">Start</button>
+      </div>
+
+      <img src="assets/images/default_logo.png" alt="" id="logo" />
+      <h3>Prototype Content-Primary Level</h3>
+      <div id="game-screen" class="screen">
+        <h2>Drag the Vegetables from baskets and put it in a right plate</h2>
+        <div id="plates-container">
+          <div class="plate-row">
+            <div class="plate-wrapper">
+              <span>Tomato</span>
+              <div
+                id="plate-tomato"
+                class="plate-dropzone"
+                data-vegetable="tomato"
+              ></div>
+            </div>
+            <div class="plate-wrapper">
+              <span>Brinjal</span>
+              <div
+                id="plate-brinjal"
+                class="plate-dropzone"
+                data-vegetable="brinjal"
+              ></div>
+            </div>
+            <div class="plate-wrapper">
+              <span>Potato</span>
+              <div
+                id="plate-potato"
+                class="plate-dropzone"
+                data-vegetable="potato"
+              ></div>
+            </div>
+          </div>
+          <div class="plate-row">
+            <div class="plate-wrapper">
+              <span>Onion</span>
+              <div
+                id="plate-onion"
+                class="plate-dropzone"
+                data-vegetable="onion"
+              ></div>
+            </div>
+            <div class="plate-wrapper">
+              <span>Beans</span>
+              <div
+                id="plate-beans"
+                class="plate-dropzone"
+                data-vegetable="beans"
+              ></div>
+            </div>
+            <div class="plate-wrapper">
+              <span>Cauliflower</span>
+              <div
+                id="plate-cauliflower"
+                class="plate-dropzone"
+                data-vegetable="cauliflower"
+              ></div>
+            </div>
+            <div class="plate-wrapper">
+              <span>Carrot</span>
+              <div
+                id="plate-carrot"
+                class="plate-dropzone"
+                data-vegetable="carrot"
+              ></div>
+            </div>
+          </div>
+        </div>
+        <div id="baskets-container">
+          <div id="basket-left" class="basket">
+            <img
+              id="tomato"
+              src="assets/images/tomato.png"
+              class="vegetable"
+              draggable="true"
+              alt="Tomato"
+            />
+            <img
+              id="onion"
+              src="assets/images/onion.png"
+              class="vegetable"
+              draggable="true"
+              alt="Onion"
+            />
+            <img
+              id="cauliflower"
+              src="assets/images/cauliflower.png"
+              class="vegetable"
+              draggable="true"
+              alt="Cauliflower"
+            />
+            <img
+              id="beans"
+              src="assets/images/beans.png"
+              class="vegetable"
+              draggable="true"
+              alt="Beans"
+            />
+          </div>
+          <div id="basket-right" class="basket">
+            <img
+              id="brinjal"
+              src="assets/images/brinjal.png"
+              class="vegetable"
+              draggable="true"
+              alt="Brinjal"
+            />
+            <img
+              id="potato"
+              src="assets/images/potato.png"
+              class="vegetable"
+              draggable="true"
+              alt="Potato"
+            />
+            <img
+              id="carrot"
+              src="assets/images/carrot.png"
+              class="vegetable"
+              draggable="true"
+              alt="Carrot"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div id="end-screen" class="screen">
+        <img src="assets/images/success-dog.png" alt="Good job!" />
+        <h1>Good</h1>
+        <button id="play-again-btn">Play Again</button>
+      </div>
+    </div>
+
+    <audio id="success-sound" src="assets/audio/success.mp3"></audio>
+    <audio id="failure-sound" src="assets/audio/failure.mp3"></audio>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,125 @@
+:root {
+  --border-color: #00bfa5;
+  --box-bg: #f5f5dc;
+  --box-border: #cccccc;
+  --text-orange: #f57c00;
+  --text-green: #388e3c;
+  --text-red: #d32f2f;
+  --text-blue: #0288d1;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: "cal Poppins", "Comic Sans MS", sans-serif;
+  background: #e0e0e0;
+  padding: 1rem;
+}
+.game-container {
+  max-width: 1000px;
+  margin: 20px auto;
+  border: 5px solid var(--border-color);
+  border-radius: 10px;
+  overflow: hidden;
+  background: white;
+}
+.card-header {
+  padding: 1rem 1.25rem;
+}
+.character-img {
+  width: 120px;
+}
+.title-main {
+  font-size: 1.4rem;
+  color: var(--text-red);
+  margin: 0;
+}
+.logo-img {
+  width: 140px;
+}
+.screen {
+  padding: 1rem;
+}
+.hidden {
+  display: none !important;
+}
+
+/* Level content */
+.letter-box {
+  width: 120px;
+  height: 120px;
+  background: var(--box-bg);
+  border: 3px solid var(--box-border);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 800;
+}
+.large-box {
+  width: 180px;
+  height: 180px;
+  font-size: 4rem;
+}
+.uppercase-color {
+  color: var(--text-blue);
+}
+.lowercase-color {
+  color: var(--text-red);
+}
+.letter-box.empty {
+  background: #e8e8e8;
+}
+.letter-box-wrapper {
+  text-align: center;
+}
+.letter-display-container {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* Options */
+.options-container .option-letter {
+  font-size: 2rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #eafbe7;
+  border: 1px solid #bfe6c1;
+}
+
+/* Stars */
+.star-container {
+  font-size: 1.2rem;
+  color: #f1c40f;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .character-img {
+    width: 80px;
+  }
+  .large-box {
+    width: 140px;
+    height: 140px;
+    font-size: 3rem;
+  }
+  .letter-box {
+    width: 100px;
+    height: 100px;
+    font-size: 2.4rem;
+  }
+}

@@ -1,0 +1,179 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f8ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+
+#logo {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  width: 150px;
+  height: auto;
+  margin-bottom: 0.5rem;
+}
+
+h3{
+    color: #4682b4;
+   position: absolute;
+  bottom: 15px;
+  left:25px ; 
+  margin-bottom: 0.2rem;
+}
+.game-container {
+  width: 900px;
+  height: 650px;
+  background-color: white;
+  border: 3px solid #ffcccc;
+  position: relative;
+  overflow: hidden;
+}
+
+.screen {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.screen.active {
+  display: flex;
+}
+
+/* Start and End Screens */
+#start-screen h1,
+#end-screen h1 {
+  color: rgb(212, 212, 95);
+  margin-bottom: 30px;
+}
+
+#start-btn,
+#play-again-btn {
+  padding: 15px 30px;
+  font-size: 20px;
+  border: 2px solid #87ceeb;
+  background-color: #f0f8ff;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#start-btn:hover,
+#play-again-btn:hover {
+  background-color: #d6f0ff;
+}
+
+#end-screen img {
+  width: 150px;
+  margin-bottom: 20px;
+}
+
+/* Game Screen */
+#game-screen {
+  justify-content: flex-start;
+}
+
+#game-screen h2 {
+  color: #c71585;
+  margin-top: 15px;
+  margin-bottom: 25px;
+  font-size: 1.2em;
+}
+
+#plates-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.plate-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.plate-wrapper {
+  text-align: center;
+}
+
+.plate-wrapper span {
+  color: #4682b4;
+  font-weight: bold;
+}
+
+.plate-dropzone {
+  width: 120px;
+  height: 50px;
+  border: 2px dashed #ccc;
+  border-radius: 50%; /* Oval shape */
+  background-color: #fafafa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.plate-dropzone.hovered {
+  background-color: #e0ffe0;
+  border-color: #4caf50;
+}
+
+#baskets-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  position: absolute;
+  bottom: 20px;
+  padding: 0 40px;
+}
+
+.basket {
+  width: 200px;
+  height: 120px;
+  background-image: url("assets/images/basket.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+}
+
+.vegetable {
+  width: 50px;
+  height: 50px;
+  cursor: grab;
+  transition: opacity 0.3s;
+}
+
+.vegetable.dragging {
+  opacity: 0.5;
+}
+
+/* When vegetable is dropped on a plate */
+.plate-dropzone .vegetable {
+  cursor: default;
+}
