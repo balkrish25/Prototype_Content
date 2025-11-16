@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shape Matching Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="game-container flex items-center justify-center">
+        <!-- Start Screen -->
+        <div id="start-screen" class="text-center w-full h-full flex flex-col justify-center items-center relative p-8">
+            <div class="flex-grow flex flex-col justify-center items-center">
+                <h1 class="text-3xl font-semibold text-[#20c997] mb-8">Match the Shapes</h1>
+                <button id="start-button"
+                    class="px-10 py-4 bg-[#b7f0e0] text-[#0d7d60] text-2xl font-bold rounded-full shadow-md border-2 border-[#20c997] hover:bg-[#97e0d0] transition-all">
+                    Start
+                </button>
+            </div>
+            <div class="absolute bottom-8 left-8 right-8 flex justify-between items-end">
+                <div class="text-left">
+                    <p class="text-[#20c997] font-semibold">Prototype Content - Pre-Primary Level</p>
+                </div>
+                <div class="text-right">
+                    <img src="./default_logo.png" alt="Logo" class="h-16 w-auto"
+                        title="Replace this src with your logo URL">
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="hidden w-full h-full p-8 flex flex-col">
+            <h1 class="text-2xl font-semibold text-black text-center mb-10">Match the Shapes</h1>
+            <div class="flex flex-grow justify-around items-center">
+                <div id="shapes-container" class="flex flex-col space-y-10 items-center">
+                    <div class="shape shape-square" draggable="true" data-shape="square"></div>
+                    <div class="shape shape-circle" draggable="true" data-shape="circle"></div>
+                    <div class="shape shape-triangle" draggable="true" data-shape="triangle"></div>
+                </div>
+
+                <div id="targets-container" class="flex flex-col space-y-4 items-center">
+                    <div class="target-box target-triangle text-2xl font-bold" data-shape="triangle">
+                        <span class="target-name"></span>
+                        <div class="dropped-shape dropped-triangle"></div>
+                    </div>
+                    <div class="target-box target-square text-2xl font-bold" data-shape="square">
+                        <span class="target-name"></span>
+                        <div class="dropped-shape dropped-square"></div>
+                    </div>
+                    <div class="target-box target-circle text-2xl font-bold" data-shape="circle">
+                        <span class="target-name"></span>
+                        <div class="dropped-shape dropped-circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Screen -->
+        <div id="success-screen" class="hidden w-full h-full flex justify-center items-center p-8">
+            <div class="flex flex-col justify-center items-start text-left mr-8">
+                <h2 class="text-5xl font-bold text-green-600 mb-6">Good</h2>
+                <button id="play-again-button"
+                    class="px-8 py-3 bg-[#b7f0e0] text-[#0d7d60] text-xl font-semibold rounded-lg shadow-md border-2 border-[#20c997] hover:bg-[#97e0d0] transition-all">
+                    Play Again
+                </button>
+            </div>
+            <div>
+                <img src="./tiger_image.jpg" alt="Success Character" class="w-96 h-96 object-contain"
+                    title="Replace this src with the Tigger image URL">
+            </div>
+        </div>
+    </div>
+    <!-- Sound Effects -->
+    <audio id="voice-intro" src="./introBasicShapes.mp3" preload="auto"></audio>
+    <audio id="clap-sound" src="./applause.mp3" preload="auto"></audio>
+    <audio id="success-sound" src="./good.mp3" preload="auto"></audio>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

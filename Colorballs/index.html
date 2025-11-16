@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Matching Game</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Link external CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="game-container flex items-center justify-center">
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="text-center w-full h-full flex flex-col justify-center items-center relative p-8">
+            <div class="flex-grow flex flex-col justify-center items-center">
+                <h1 class="text-3xl font-semibold text-blue-600 mb-8">
+                    Match the Colour Balls with Colour Name
+                </h1>
+                <button id="start-button"
+                    class="px-10 py-4 bg-green-200 text-green-800 text-2xl font-bold rounded-full shadow-md border-2 border-green-400 hover:bg-green-300 transition-all">
+                    Start
+                </button>
+            </div>
+
+            <div class="absolute bottom-8 left-8 right-8 flex justify-between items-end">
+                <div class="text-left">
+                    <p class="text-blue-600 font-semibold">Prototype Content - Primary Level</p>
+                </div>
+                <div class="text-right">
+                    <img src="./default_logo.png" alt="Logo" class="h-16 w-auto"
+                        title="Replace this src with your logo URL">
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="hidden w-full p-8">
+            <h1 class="text-2xl font-semibold text-black text-center mb-10">
+                Match the Colour Balls with Colour Name
+            </h1>
+
+            <div class="flex justify-around items-center">
+                <!-- Draggable Balls -->
+                <div id="balls-container" class="flex flex-col space-y-8">
+                    <div class="ball ball-yellow" draggable="true" data-color="yellow"></div>
+                    <div class="ball ball-red" draggable="true" data-color="red"></div>
+                    <div class="ball ball-green" draggable="true" data-color="green"></div>
+                    <div class="ball ball-blue" draggable="true" data-color="blue"></div>
+                </div>
+
+                <!-- Drop Targets -->
+                <div id="targets-container" class="flex flex-col space-y-4">
+                    <div class="target-box target-blue text-2xl font-bold" data-color="blue">
+                        <span class="target-name">Blue</span>
+                        <div class="dropped-ball dropped-blue"></div>
+                    </div>
+                    <div class="target-box target-green text-2xl font-bold" data-color="green">
+                        <span class="target-name">Green</span>
+                        <div class="dropped-ball dropped-green"></div>
+                    </div>
+                    <div class="target-box target-yellow text-2xl font-bold" data-color="yellow">
+                        <span class="target-name">Yellow</span>
+                        <div class="dropped-ball dropped-yellow"></div>
+                    </div>
+                    <div class="target-box target-red text-2xl font-bold" data-color="red">
+                        <span class="target-name">Red</span>
+                        <div class="dropped-ball dropped-red"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Screen -->
+        <div id="success-screen" class="hidden w-full h-full flex justify-center items-center p-8">
+            <div class="flex flex-col justify-center items-start text-left mr-8">
+                <h2 class="text-5xl font-bold text-green-600 mb-6">Good</h2>
+                <button id="play-again-button"
+                    class="px-8 py-3 bg-[#b7f0e0] text-[#0d7d60] text-xl font-semibold rounded-lg shadow-md border-2 border-[#20c997] hover:bg-[#97e0d0] transition-all">
+                    Play Again
+                </button>
+            </div>
+            <div>
+                <img src="./Mickey_Mouse_image.webp" alt="Success Character" class="w-96 h-96 object-contain"
+                    title="Replace this src with the Tigger image URL">
+            </div>
+        </div>
+    </div>
+
+    <audio id="intro-sound" src="./introColorBalls.mp3" preload="auto"></audio>
+    <audio id="clap-sound" src="./applause.mp3" preload="auto"></audio>
+
+    <!-- External JS -->
+    <script src="script.js"></script>
+</body>
+
+</html>
+

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let us Learn the Numbers</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Audio Files -->
+    <audio id="sound-welcome" src="./numberAudio/1num.mp3" preload="auto"></audio>
+    <audio id="sound-read-learn" src="./numberAudio/2_7num.mp3" preload="auto"></audio>
+    <audio id="sound-select-number" src="./numberAudio/3_8num.mp3" preload="auto"></audio>
+    <audio id="sound-good" src="./numberAudio/5goodNum.mp3" preload="auto"></audio>
+    <audio id="sound-wrong" src="./numberAudio/6SorryTryAgain.mp3" preload="auto"></audio>
+    <audio id="sound-you-are-good" src="./numberAudio/9YouareGood.mp3" preload="auto"></audio>
+
+    <div class="game-container">
+
+        <!-- Main Menu -->
+        <div id="main-menu-page" class="page active">
+            <h1 class="page-title">Let us Learn the Numbers</h1>
+            <div class="button-grid">
+                <button class="button" id="start-level-1-btn">Start 1st Level</button>
+                <div class="button-row">
+                    <button class="button" id="start-level-2-btn">Start 2nd Level</button>
+                    <button class="button" id="start-level-3-btn">Start 3rd Level</button>
+                </div>
+                <button class="button" id="start-level-4-btn">Start 4th Level</button>
+            </div>
+
+            <div class="footer-text">Prototype Content - Primary Level</div>
+            <div class="footer-logo">
+                <img src="./numberImages/default_logo.png" alt="CDAC Bangalore Logo">
+                e-SAdhya <br> © CDAC, KP, Bangalore
+            </div>
+        </div>
+
+        <!-- Level 1 -->
+        <div id="level-1-page" class="page">
+            <div class="header">
+                <img src="./numberImages/home_button_image.jpeg" alt="Home" class="home-button">
+            </div>
+            <div class="instruction-text" id="level-1-instruction">Read and Learn the number</div>
+            <div class="read-number-display" id="level-1-display"></div>
+            <div class="nav-buttons">
+                <button class="nav-arrow-button" id="level-1-back">
+                    <img src="./numberImages/back_button.jpg" alt="Back">
+                </button>
+                <button class="nav-arrow-button" id="level-1-next">
+                    <img src="./numberImages/next_button.jpg" alt="Next">
+                </button>
+            </div>
+        </div>
+
+        <!-- Level 2 Intro -->
+        <div id="level-2-intro-page" class="page">
+            <div class="header">
+                <img src="./numberImages/home_button_image.jpeg" alt="Home" class="home-button">
+            </div>
+            <div class="level-intro-layout">
+                <div class="intro-text">
+                    <h2 class="page-title">Select the Right Number</h2>
+                    <button class="button" id="start-level-2-game-btn">Start 2nd Level</button>
+                </div>
+                <div class="intro-image">
+                    <img src="./numberImages/level1_squirrel.jpg" alt="Squirrel with Glasses">
+                </div>
+            </div>
+        </div>
+
+        <!-- Level 2 Game -->
+        <div id="level-2-game-page" class="page">
+            <div class="header">
+                <div class="star-container" id="level-2-stars"></div>
+                <img src="./numberImages/home_button_image.jpeg" alt="Home" class="home-button">
+            </div>
+            <div class="instruction-text">Click on the right number</div>
+            <div class="quiz-question">
+                <span class="quiz-word" id="level-2-word"></span> =
+                <div class="quiz-options" id="level-2-options"></div>
+            </div>
+        </div>
+
+        <!-- Level 3 Intro -->
+        <div id="level-3-intro-page" class="page">
+            <div class="header">
+                <img src="./numberImages/home_button_image.jpeg" alt="Home" class="home-button">
+            </div>
+            <div class="level-intro-layout">
+                <div class="intro-text">
+                    <h2 class="page-title">Read and Learn the Number</h2>
+                    <button class="button" id="start-level-3-game-btn">Start 3rd Level</button>
+                </div>
+                <div class="intro-image">
+                    <img src="./numberImages/level2_squirrel.jpg" alt="Squirrel with Red A Shirt">
+                </div>
+            </div>
+        </div>
+
+        <!-- Level 3 Game -->
+        <div id="level-3-page" class="page">
+            <div class="header">
+                <img src="./numberImages/home_button_image.jpeg" alt="Home" class="home-button">
+            </div>
+            <div class="instruction-text" id="level-3-instruction">Read the number</div>
+            <div class="read-number-display" id="level-3-display"></div>
+            <div class="nav-buttons">
+                <button class="nav-arrow-button" id="level-3-back">
+                    <img src="./numberImages/back_button.jpg" alt="Back">
+                </button>
+                <button class="nav-arrow-button" id="level-3-next">
+                    <img src="./numberImages/next_button.jpg" alt="Next">
+                </button>
+            </div>
+        </div>
+
+        <!-- Level 4 Intro -->
+        <div id="level-4-intro-page" class="page">
+            <div class="header">
+                <img src="./numberImages/home_button_image.jpeg" alt="Home" class="home-button">
+            </div>
+            <div class="level-intro-layout">
+                <div class="intro-text">
+                    <h2 class="page-title">Select the Right Number</h2>
+                    <button class="button" id="start-level-4-game-btn">Start 4th Level</button>
+                </div>
+                <div class="intro-image">
+                    <img src="./numberImages/level3_squirrel.jpg" alt="Chubby Green Squirrel">
+                </div>
+            </div>
+        </div>
+
+        <!-- Level 4 Game -->
+        <div id="level-4-game-page" class="page">
+            <div class="header">
+                <div class="star-container" id="level-4-stars"></div>
+                <img src="./numberImages/home_button_image.jpeg" alt="Home" class="home-button">
+            </div>
+            <div class="instruction-text">Click on the right number</div>
+            <div class="quiz-question">
+                <span class="quiz-word" id="level-4-word"></span> =
+                <div class="quiz-options" id="level-4-options"></div>
+            </div>
+        </div>
+
+        <!-- Correct Page -->
+        <div id="correct-page" class="page">
+            <div class="header">
+                <div class="star-container" id="correct-stars"></div>
+                <img src="./numberImages/home_button_image.jpeg" alt="Home" class="home-button">
+            </div>
+            <h2>Good!</h2>
+            <button class="nav-arrow-button" id="correct-next-btn">
+                <img src="./numberImages/next_button.jpg" alt="Next">
+            </button>
+        </div>
+
+        <!-- Wrong Page -->
+        <div id="wrong-page" class="page">
+            <div class="header">
+                <div class="star-container" id="wrong-stars"></div>
+                <img src="./numberImages/home_button_image.jpeg" alt="Home" class="home-button">
+            </div>
+            <h2>Sorry, try again.</h2>
+            <button class="nav-arrow-button" id="wrong-back-btn">
+                <img src="./numberImages/back_button.jpg" alt="Back">
+            </button>
+        </div>
+
+        <!-- End Game -->
+        <div id="end-game-page" class="page">
+            <div class="header">
+                <img src="./numberImages/home_button_image.jpeg" alt="Home" class="home-button">
+            </div>
+            <div class="star-container" id="end-stars"></div>
+            <div class="squirrel-gallery">
+                <div class="squirrel-gallery-image" style="max-width: 400px;">
+                    <img src="./numberImages/three_squirrel.jpg" alt="Three Squirrels" style="width: 200%; height: auto;">
+                </div>
+            </div>
+            <h2 class="you-are-good-message">You are Good</h2>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
+
