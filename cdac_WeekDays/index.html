@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Learn the Week Days - Final</title>
+<style>
+  :root{
+    --teal:#00b4a4;
+    --teal-strong:#07b1a9;
+    --accent:#0b61c9;
+    --pink:#ff4f7a;
+    --light-yellow:#fffbd6;
+    --pool-border:#0fb1ea;
+    --shadow:0 6px 18px rgba(0,0,0,0.06);
+    font-family: "Poppins", "Segoe UI", Roboto, Arial, sans-serif;
+  }
+  html,body{height:100%;margin:0;background:#fff;color:#111}
+  .page{
+    border-left:6px solid var(--teal);
+    border-right:6px solid var(--teal);
+    min-height:100vh;
+    position:relative;
+    padding:18px 30px;
+    box-sizing:border-box;
+  }
+  #homeIcon{ position:absolute; top:16px; right:22px; width:40px; height:40px; cursor:pointer; }
+
+  .stage{ max-width:1120px; margin:0 auto; min-height:76vh; display:flex; align-items:center; justify-content:center; flex-direction:column; }
+
+  .home-title{ color:var(--teal-strong); font-size:48px; font-weight:800; margin:28px 0 22px; text-align:center; }
+  .start-row{ display:flex; gap:48px; align-items:center; justify-content:center; margin-bottom:12px; }
+  .pill{ position:relative; border-radius:44px; padding:14px 36px; font-weight:800; font-size:22px; cursor:pointer; user-select:none; background:#eafbf7; color:var(--teal-strong); box-shadow:var(--shadow); min-width:240px; height:64px; display:flex; align-items:center; justify-content:center; }
+  .pill::before{ content:""; position:absolute; inset:-6px; border-radius:48px; border:5px solid rgba(0,180,164,0.25); pointer-events:none; }
+  .pill.secondary{ background:#eef7ff; color:#155fa8; }
+  .pill.secondary::before{ border-color:rgba(11,97,201,0.12); }
+
+  .bottom-left{ position:absolute; left:28px; bottom:18px; color:var(--accent); font-weight:800; font-size:18px; }
+  .bottom-right{ position:absolute; right:28px; bottom:6px; }
+  .bottom-right img{ width:120px; height:auto; }
+
+  .screen{ display:none; width:100%; }
+  .screen.active{ display:block; }
+
+  .level1-title{ text-align:center; color:var(--accent); font-size:28px; font-weight:800; margin:6px 0 20px; }
+  .grid-row{ display:grid; grid-template-columns: repeat(4, 1fr); gap:28px; width:100%; max-width:1050px; margin:0 auto; }
+  .card{ border:4px solid var(--teal-strong); border-radius:6px; padding:8px; display:flex; flex-direction:column; align-items:center; background:#fff; }
+  .card .top{ background:var(--light-yellow); width:100%; text-align:center; padding:12px 6px; margin-bottom:8px; font-size:28px; color:var(--pink); font-weight:800; border-radius:2px; }
+  .drop-slot{ width:86%; height:38px; background:#fff; display:flex; align-items:center; justify-content:center; border-radius:4px; box-shadow:inset 0 0 0 1px rgba(0,0,0,0.04); font-weight:800; font-size:20px; }
+
+  .row-2{ display:flex; gap:36px; justify-content:center; margin:20px 0 10px; }
+  .pool-box{ width:78%; margin:26px auto; border:4px solid var(--pool-border); border-radius:6px; padding:16px; min-height:72px; display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap; }
+  .pool-item{ padding:10px 14px; background:#fff; border-radius:10px; box-shadow:var(--shadow); font-weight:800; font-size:18px; cursor:grab; border:3px solid rgba(0,0,0,0.06); user-select:none; }
+
+  .level2-title{ text-align:center; color:var(--accent); font-size:28px; font-weight:800; margin:8px 0 10px; }
+  .round-info { text-align:center; color:var(--accent); font-weight:800; margin-bottom:6px; }
+  .level2-wrap{ display:flex; gap:36px; align-items:flex-start; justify-content:center; margin-top:8px; }
+  .left-col{ width:46%; display:flex; flex-direction:column; gap:18px; padding-left:20px; box-sizing:border-box; }
+  .left-item{ border:4px solid var(--teal-strong); background:linear-gradient(var(--light-yellow),#fff); padding:8px 12px; width:320px; height:56px; display:flex; align-items:center; font-weight:900; font-size:28px; border-radius:6px; justify-content:flex-start; }
+  .blank-slot{ width:240px; height:46px; background:#fff; border-radius:4px; margin-left:18px; border:4px solid rgba(11,97,201,0.08); display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:900; }
+  .right-col{ width:36%; display:flex; flex-direction:column; gap:28px; align-items:flex-start; padding-left:30px; }
+  .right-word{ font-size:30px; font-weight:900; cursor:grab; user-select:none; }
+
+  .start-next{ display:inline-block; margin-left:10px; padding:8px 14px; border-radius:12px; background:#eef7ff; color:#155fa8; border:3px solid rgba(11,97,201,0.12); font-weight:800; cursor:pointer; }
+
+  .good-wrap{ text-align:center; padding-top:20px; }
+  .good-wrap img{ max-width:420px; height:auto; margin:10px auto; display:block; }
+  .good-text{ font-size:44px; font-weight:900; color:#4a8b11; margin-top:12px; }
+
+  .shake{ animation: shake 0.22s; }
+  @keyframes shake{ 0%{transform:translateX(0)}30%{transform:translateX(-8px)}60%{transform:translateX(8px)}100%{transform:translateX(0)}}
+
+  @media (max-width:980px){
+    .grid-row{ grid-template-columns:repeat(2,1fr); }
+    .left-item{ width:260px; font-size:22px; }
+    .blank-slot{ width:200px; }
+    .pool-box{ width:92%; }
+    .home-title{ font-size:34px; margin-top:30px; }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- top-right home icon (only home control) -->
+    <img id="homeIcon" src="" alt="home" title="Home">
+
+    <div class="stage">
+
+      <!-- HOME SCREEN -->
+      <div id="homeScreen" class="screen active" role="main" aria-label="home">
+        <div class="home-title">Learn the Week Days</div>
+        <div class="start-row">
+          <div id="start1" class="pill">Start 1st Level</div>
+          <div id="start2" class="pill secondary">Start 2nd Level</div>
+        </div>
+      </div>
+
+      <!-- LEVEL 1 -->
+      <div id="level1" class="screen" aria-label="level1">
+        <div class="level1-title">Match the name of Week days</div>
+
+        <div class="grid-row">
+          <div class="card"><div class="top">Monday</div><div class="drop-slot" data-day="Monday" data-occupied="false"></div></div>
+          <div class="card"><div class="top">Tuesday</div><div class="drop-slot" data-day="Tuesday" data-occupied="false"></div></div>
+          <div class="card"><div class="top">Wednesday</div><div class="drop-slot" data-day="Wednesday" data-occupied="false"></div></div>
+          <div class="card"><div class="top">Thursday</div><div class="drop-slot" data-day="Thursday" data-occupied="false"></div></div>
+        </div>
+
+        <div class="row-2">
+          <div class="card" style="width:260px"><div class="top">Friday</div><div class="drop-slot" data-day="Friday" data-occupied="false"></div></div>
+          <div class="card" style="width:260px"><div class="top">Saturday</div><div class="drop-slot" data-day="Saturday" data-occupied="false"></div></div>
+          <div class="card" style="width:260px"><div class="top">Sunday</div><div class="drop-slot" data-day="Sunday" data-occupied="false"></div></div>
+        </div>
+
+        <div id="pool1" class="pool-box" aria-live="polite"></div>
+
+        <div class="center-actions" style="text-align:center;">
+          <div id="shuffle1" class="pill secondary" style="height:48px;padding:8px 18px; min-width:120px;">Shuffle</div>
+        </div>
+      </div>
+
+      <!-- LEVEL 2 -->
+      <div id="level2" class="screen" aria-label="level2">
+        <div class="level2-title">Match the Missing day</div>
+        <div class="round-info" id="roundInfo">Round 1 of 7</div>
+
+        <div class="level2-wrap">
+          <div class="left-col" id="leftCol"></div>
+          <div class="right-col" id="rightCol"></div>
+        </div>
+
+        <div style="text-align:center; margin-top:18px;">
+          <div id="startNextBtn" class="start-next" style="display:none;">Start Next Round</div>
+        </div>
+      </div>
+
+      <!-- GOOD SCREEN -->
+      <div id="good" class="screen" aria-label="good">
+        <div class="good-wrap">
+          <img src="Screenshot (1731).png" alt="Ganesha">
+          <div class="good-text">Good</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Prototype and cdac logo only on home -->
+    <div id="proto" class="bottom-left">Prototype Content - Primary Level</div>
+    <div id="cdac" class="bottom-right"><img id="cdacLogo" src="default_logo.png" alt="CDAC Logo"></div>
+
+  </div>
+
+<script>
+/* ================= ASSETS & AUDIO ================= */
+const DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+function playTone(freq=440,dur=0.16,type='sine'){
+  const o = audioCtx.createOscillator();
+  const g = audioCtx.createGain();
+  o.type = type; o.frequency.value = freq;
+  o.connect(g); g.connect(audioCtx.destination);
+  const now = audioCtx.currentTime;
+  g.gain.setValueAtTime(0.0001, now);
+  g.gain.linearRampToValueAtTime(0.12, now + 0.01);
+  o.start(now);
+  g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+  o.stop(now + dur + 0.02);
+}
+function playCorrect(){ playTone(660,0.12); setTimeout(()=>playTone(880,0.12),100); }
+function playWrong(){ playTone(220,0.22,'square'); }
+window.addEventListener('pointerdown', ()=>{ if(audioCtx.state==='suspended') audioCtx.resume(); }, {once:true});
+
+/* ================= HELPERS ================= */
+function el(tag, cls, txt){ const e=document.createElement(tag); if(cls) e.className = cls; if(txt !== undefined) e.textContent = txt; return e; }
+function shuffle(arr){ const a = arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function cssEscape(s){ return s.replace(/(["'\\])/g,'\\$1'); }
+function shake(elm){ elm.classList.add('shake'); setTimeout(()=>elm.classList.remove('shake'),220); }
+
+/* set home icon svg */
+document.getElementById('homeIcon').src = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><g><path d="M32 6 L6 26h6v26h14V38h10v14h14V26h6z" fill="#ff7043" stroke="#b71c1c" stroke-width="1.2"/><rect x="26" y="38" width="12" height="12" fill="#ffd3a5" stroke="#b71c1c" stroke-width="1"/></g></svg>'
+);
+
+/* ================= SCREEN CONTROL ================= */
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  // prototype and cdac only visible on home
+  const isHome = (id === 'homeScreen');
+  document.getElementById('proto').style.display = isHome ? 'block' : 'none';
+  document.getElementById('cdac').style.display = isHome ? 'block' : 'none';
+}
+document.getElementById('homeIcon').addEventListener('click', ()=> showScreen('homeScreen'));
+
+/* ================= LEVEL 1 ================= */
+const pool1 = document.getElementById('pool1');
+const shuffle1 = document.getElementById('shuffle1');
+const start1 = document.getElementById('start1');
+const start2 = document.getElementById('start2');
+
+let correctCount1 = 0;
+
+start1.addEventListener('click', ()=>{ initLevel1(); showScreen('level1'); });
+shuffle1.addEventListener('click', initLevel1);
+
+// populate initial Level1 pool on load
+initLevel1();
+
+function initLevel1(){
+  correctCount1 = 0;
+  pool1.innerHTML = '';
+  document.querySelectorAll('#level1 .drop-slot').forEach(s=>{
+    s.textContent = '';
+    s.dataset.occupied = 'false';
+    s.ondragover = e => e.preventDefault();
+    s.ondrop = onLevel1Drop;
+    s.classList.remove('locked');
+  });
+  const list = shuffle(DAYS);
+  list.forEach(d => pool1.appendChild(makePoolItem(d)));
+}
+
+function makePoolItem(text){
+  const d = el('div','pool-item',text);
+  d.draggable = true;
+  d.dataset.day = text;
+  d.addEventListener('dragstart', e=>{
+    e.dataTransfer.setData('text/plain', text);
+    setTimeout(()=> d.style.visibility = 'hidden', 10);
+  });
+  d.addEventListener('dragend', e=> d.style.visibility = 'visible');
+  return d;
+}
+
+function onLevel1Drop(e){
+  e.preventDefault();
+  const slot = e.currentTarget;
+  const day = e.dataTransfer.getData('text/plain');
+  if(!day) return;
+  if(slot.dataset.occupied === 'true'){ playWrong(); shake(slot); return; }
+  const expected = slot.dataset.day;
+  if(day === expected){
+    slot.dataset.occupied = 'true';
+    slot.textContent = day;
+    slot.classList.add('locked');
+    const item = pool1.querySelector(`[data-day="${cssEscape(day)}"]`);
+    if(item) item.remove();
+    correctCount1++;
+    playCorrect();
+    if(correctCount1 >= 7){
+      // automatically go to Level 2
+      setTimeout(()=> {
+        startLevel2AfterLevel1();
+      }, 500);
+    }
+  } else {
+    playWrong();
+    shake(slot);
+  }
+}
+
+/* ================= LEVEL 2 ================= */
+const leftCol = document.getElementById('leftCol');
+const rightCol = document.getElementById('rightCol');
+const roundInfo = document.getElementById('roundInfo');
+const startNextBtn = document.getElementById('startNextBtn');
+
+let round = 1;
+const TOTAL_ROUNDS = 7;
+let currentMissingIndex = null;
+let styleBLocked = false;
+
+// Start 2nd Level can be clicked manually from Home if user wants to jump directly
+start2.addEventListener('click', ()=> { round = 1; prepareRound(round); showScreen('level2'); });
+
+// Start Next Round button (for rounds 5-7)
+startNextBtn.addEventListener('click', ()=> {
+  styleBLocked = false;
+  startNextBtn.style.display = 'none';
+});
+
+function startLevel2AfterLevel1(){
+  // begin Level 2 automatically from Level 1 completion
+  round = 1;
+  prepareRound(round);
+  showScreen('level2');
+}
+
+function prepareRound(r){
+  roundInfo.textContent = `Round ${r} of ${TOTAL_ROUNDS}`;
+  leftCol.innerHTML = '';
+  rightCol.innerHTML = '';
+  if(r <= 4){
+    // Style A rounds - auto
+    styleBLocked = false;
+    startNextBtn.style.display = 'none';
+    buildStyleA();
+  } else {
+    // Style B rounds - needs manual "Start Next Round" to enable drop
+    styleBLocked = true;
+    startNextBtn.style.display = 'inline-block';
+    buildStyleB();
+  }
+}
+
+/* STYLE A: list of days, one missing */
+function buildStyleA(){
+  const missing = Math.floor(Math.random()*7);
+  currentMissingIndex = missing;
+
+  DAYS.forEach((d,i)=>{
+    const wrapper = el('div','');
+    wrapper.style.display = 'flex';
+    wrapper.style.alignItems = 'center';
+    wrapper.style.gap = '18px';
+
+    const label = el('div','','');
+    label.textContent = d;
+    label.style.fontSize = '28px';
+    label.style.fontWeight = '900';
+
+    const slot = el('div','blank-slot','');
+    if(i === missing){
+      slot.dataset.expected = d;
+      slot.addEventListener('dragover', e => e.preventDefault());
+      slot.addEventListener('drop', onStyleADrop);
+    } else {
+      slot.style.border = 'none';
+    }
+
+    wrapper.appendChild(label);
+    wrapper.appendChild(slot);
+    leftCol.appendChild(wrapper);
+  });
+
+  const pool = shuffle(DAYS.slice());
+  pool.forEach(d => {
+    const w = el('div','right-word',d);
+    w.draggable = true;
+    w.dataset.day = d;
+    w.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('text/plain', d);
+      setTimeout(()=> w.style.visibility='hidden', 10);
+    });
+    w.addEventListener('dragend', e => w.style.visibility='visible');
+    rightCol.appendChild(w);
+  });
+}
+
+function onStyleADrop(e){
+  e.preventDefault();
+  const slot = e.currentTarget;
+  const dropped = e.dataTransfer.getData('text/plain');
+  if(!dropped) return;
+  const expected = slot.dataset.expected;
+  const expectedIndex = DAYS.indexOf(expected);
+  if(expectedIndex === currentMissingIndex && dropped === expected){
+    slot.textContent = dropped;
+    playCorrect();
+    const w = rightCol.querySelector(`[data-day="${cssEscape(dropped)}"]`);
+    if(w) w.remove();
+    setTimeout(()=> {
+      if(round < TOTAL_ROUNDS){
+        round++;
+        prepareRound(round);
+      } else {
+        setTimeout(()=> showScreen('good'), 450);
+      }
+    }, 500);
+  } else {
+    playWrong();
+    shake(slot);
+  }
+}
+
+/* STYLE B: Yesterday / Today / Tomorrow with randomized row order
+   One of the three is missing. Drops disabled until user clicks Start Next Round.
+*/
+function buildStyleB(){
+  const todayIdx = Math.floor(Math.random()*7);
+  const map = [
+    {label:'Yesterday was', idx: (todayIdx - 1 + 7) % 7},
+    {label:'Today is', idx: todayIdx},
+    {label:'Tomorrow is', idx: (todayIdx + 1) % 7}
+  ];
+
+  // randomly choose which position (0..2) will be missing
+  const missingChoice = Math.floor(Math.random()*3);
+  currentMissingIndex = map[missingChoice].idx;
+
+  // randomize the display order of the three rows
+  const displayOrder = shuffle([0,1,2]);
+  displayOrder.forEach(i => {
+    const row = map[i];
+    const rowWrap = el('div','');
+    rowWrap.style.display = 'flex';
+    rowWrap.style.alignItems = 'center';
+    rowWrap.style.gap = '20px';
+    rowWrap.style.marginBottom = '8px';
+
+    const label = el('div','','');
+    label.textContent = row.label;
+    label.style.color = 'var(--accent)';
+    label.style.fontWeight = '800';
+    label.style.fontSize = '24px';
+    label.style.minWidth = '160px';
+
+    const leftBox = el('div','left-item','');
+    leftBox.style.width = '220px';
+    leftBox.style.justifyContent = 'flex-start';
+
+    if(row.idx === currentMissingIndex){
+      // create blank slot (drop target)
+      const blank = el('div','blank-slot','');
+      blank.dataset.expected = DAYS[row.idx];
+      blank.addEventListener('dragover', e=> e.preventDefault());
+      blank.addEventListener('drop', onStyleBDrop);
+      leftBox.appendChild(blank);
+    } else {
+      const textBlock = el('div','','');
+      textBlock.textContent = DAYS[row.idx];
+      textBlock.style.fontSize = '28px';
+      textBlock.style.fontWeight = '900';
+      leftBox.appendChild(textBlock);
+    }
+
+    rowWrap.appendChild(label);
+    rowWrap.appendChild(leftBox);
+    leftCol.appendChild(rowWrap);
+  });
+
+  // right column words
+  const pool = shuffle(DAYS.slice());
+  pool.forEach(d => {
+    const w = el('div','right-word',d);
+    w.draggable = true;
+    w.dataset.day = d;
+    w.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('text/plain', d);
+      setTimeout(()=> w.style.visibility = 'hidden', 10);
+    });
+    w.addEventListener('dragend', e => w.style.visibility = 'visible');
+    rightCol.appendChild(w);
+  });
+
+  // lock drops until Start Next Round clicked
+  styleBLocked = true;
+}
+
+function onStyleBDrop(e){
+  e.preventDefault();
+  if(styleBLocked){
+    playWrong();
+    return;
+  }
+  const slot = e.currentTarget;
+  const dropped = e.dataTransfer.getData('text/plain');
+  if(!dropped) return;
+  const expected = slot.dataset.expected;
+  if(dropped === expected){
+    slot.textContent = dropped;
+    playCorrect();
+    const w = rightCol.querySelector(`[data-day="${cssEscape(dropped)}"]`);
+    if(w) w.remove();
+    setTimeout(()=> {
+      if(round < TOTAL_ROUNDS){
+        round++;
+        prepareRound(round);
+      } else {
+        setTimeout(()=> showScreen('good'), 450);
+      }
+    }, 500);
+  } else {
+    playWrong();
+    shake(slot);
+  }
+}
+
+/* ================= INIT ================= */
+showScreen('homeScreen'); // show home on load
+initLevel1(); // pre-fill level 1
+
+// When a Style B round is prepared (rounds 5..7), show the Start Next Round button
+// We already set startNextBtn visible in prepareRound; clicking it sets styleBLocked=false
+
+</script>
+</body>
+</html>
