@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match the Missing Body Part</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div style="display:none;">
+        <audio id="audio-intro" src="/Assets/Audios/Match_The_missing_body_parts_audio.mp3" preload="auto"></audio>
+        <audio id="audio-clap" src="/Assets/Audios/applause.mp3" preload="auto"></audio>
+        <audio id="audio-end" src="/Assets/Audios/9YouareGood.mp3" preload="auto"></audio>
+    </div>
+
+    <div class="container">
+
+        <!-- START SCREEN -->
+        <div id="start-screen" class="page active">
+            <h1>Match the missing Body Part</h1>
+            <a id="start-button" class="button">Start</a>
+
+            <div class="footer-text">Prototype Content - Pre-Primary Level</div>
+
+            <div class="footer-logo">
+                <img src="/Assets/Images/default_logo.png" alt="CDAC Logo">
+                e-SAdhya (CDAC, KP, Bangalore)
+            </div>
+        </div>
+
+        <!-- GAME SCREEN -->
+        <div id="game-screen" class="page">
+            <div class="header">
+                <div class="star-rating" id="game-stars"></div>
+                <a class="home-button" id="home-button-game">
+                    <img src="/Assets/Images/home_button_image.jpeg" alt="">
+                </a>
+            </div>
+
+            <div class="game-layout">
+                <div id="drop-zone">
+                    <div id="boy-image"></div>
+                </div>
+
+                <div id="parts-bin">
+                    <div class="draggable" draggable="true" data-part="feet">
+                        <img class="draggable-img" src="/Assets/Images/both_legs.jpg" alt="Legs">
+                    </div>
+
+                    <div class="draggable" draggable="true" data-part="torso">
+                        <img class="draggable-img" src="/Assets/Images/pants.jpg" alt="Pants">
+                    </div>
+
+                    <div class="draggable" draggable="true" data-part="hands">
+                        <img class="draggable-img" src="/Assets/Images/both_hands.jpg" alt="Hands">
+                    </div>
+
+                    <div class="draggable" draggable="true" data-part="head">
+                        <img class="draggable-img" src="/Assets/Images/head.jpg" alt="Head">
+                    </div>
+
+                    <div class="draggable" draggable="true" data-part="neck">
+                        <img class="draggable-img" src="/Assets/Images/neck.jpg" alt="Neck">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CORRECT SCREEN -->
+        <div id="correct-screen" class="page">
+            <div class="header">
+                <div class="star-rating" id="correct-stars"></div>
+                <a class="home-button" id="home-button-correct">
+                    <img src="/Assets/Images/home_button_image.jpeg" alt="">
+                </a>
+            </div>
+
+            <div class="level-intro-layout">
+                <div class="intro-text">
+                    <h2 class="page-title">Good</h2>
+                    <button class="button" id="next-button">Next</button>
+                </div>
+
+                <div class="intro-image">
+                    <img src="/Assets/Images/full_body.jpg" alt="Full body">
+                </div>
+            </div>
+        </div>
+
+        <!-- END SCREEN -->
+        <div id="end-screen" class="page">
+            <div id="smiley-icon">
+                <img src="/Assets/Images/last_image_body_parts.jpg" alt="smiley-icon">
+            </div>
+            <h2>You are Good</h2>
+            <a id="play-again-button" class="button">Play Again</a>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

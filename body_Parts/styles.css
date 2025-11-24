@@ -1,0 +1,563 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+}
+
+/* Main Game Container */
+.container {
+    width: 90%;
+    max-width: 800px;
+    height: 500px;
+    /* FIXED HEIGHT */
+    border: 3px solid lightpink;
+    border-radius: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    /* Prevent size expansion */
+}
+
+
+/* Page System */
+.page {
+    display: none;
+    /* Hide all pages by default */
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.page img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    /* Shrinks image to fit inside fixed box */
+}
+
+.page * {
+    max-height: 100%;
+    max-width: 100%;
+    flex-shrink: 1;
+}
+
+
+.page.active {
+    display: block;
+    /* Show only the active page */
+}
+
+/* --- Page 1: Start Screen --- */
+#start-screen h1 {
+    color: #007bff;
+    margin-top: 18%;
+}
+
+.footer-text {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-size: 12px;
+    color: gray;
+}
+
+.footer-logo {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    max-width: 100px;
+    height: auto;
+    text-align: center;
+    font-size: 0.7rem;
+    color: #555;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+.footer-logo img {
+    max-width: 80px;
+    height: auto;
+    display: block;
+    margin: 0 auto 5px auto;
+}
+
+/* --- Shared Game Elements --- */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.star-rating {
+    font-size: 30px;
+    color: #ddd;
+    /* Empty star color */
+}
+
+.star.filled {
+    color: green;
+    /* Filled star color */
+}
+
+.home-button {
+    font-size: 30px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* --- Page 2: Game Screen --- */
+.game-layout {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    margin-top: 30px;
+}
+
+#drop-zone {
+    width: 250px;
+    height: 370px;
+    border: 3px solid dodgerblue;
+    background: #f0f8ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* font-size: 18px;
+            color: #555;
+            font-weight: bold; */
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+
+#parts-bin {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    padding: 5px;
+    height: 100%;
+    overflow-y: auto;
+    /* <-- prevents overflow */
+}
+
+.draggable {
+    width: 100%;
+    max-width: 180px;
+    /* smaller width fits better */
+    height: 70px;
+    /* FIXED safe height */
+    padding: 5px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 8px;
+    cursor: grab;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.draggable-img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+
+/* active dragging state */
+.draggable:active {
+    cursor: grabbing;
+    transform: scale(0.995);
+}
+
+.draggable:active {
+    cursor: grabbing;
+}
+
+
+/* Shake animation for wrong body part */
+.shake {
+    animation: shakeAnim 0.4s ease;
+}
+
+@keyframes shakeAnim {
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-6px);
+    }
+
+    50% {
+        transform: translateX(6px);
+    }
+
+    75% {
+        transform: translateX(-6px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+
+/* --- Page 3: Correct Screen --- */
+#correct-screen h2 {
+    font-size: 40px;
+    color: teal;
+    margin-top: 50px;
+}
+
+.level-intro-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px 20px;
+}
+
+.home-button {
+    height: 40px;
+    /* Set a fixed height for the image */
+    width: auto;
+    cursor: pointer;
+    user-select: none;
+}
+
+.page-title {
+    font-size: 1.8rem;
+    color: #075985;
+    margin: 0 0 15px 0;
+    /* small gap between heading and button */
+    white-space: nowrap;
+    /* keeps text on one line */
+}
+
+.intro-text {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: 10px;
+}
+
+.boy-base {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+#boy-image img {
+    max-width: 90%;
+}
+
+
+.button {
+    box-sizing: border-box;
+    margin-top: 1.5rem;
+    padding: 12px 25px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    background: #f0f0f0;
+    border: 2px solid #ccc;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 200px;
+}
+
+.button:hover {
+    background: #e5e5e5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.intro-image {
+    width: 100%;
+    /* Take full width of its parent container */
+    display: flex;
+    justify-content: center;
+    /* Center the image */
+    align-items: center;
+}
+
+.intro-image img {
+    max-width: 50%;
+    /* Limit image width to 70% of container width */
+    max-height: 420px;
+    /* Maintain aspect ratio */
+    object-fit: contain;
+}
+
+/* --- Page 4: End Screen --- */
+#end-screen h2 {
+    font-size: 40px;
+    color: green;
+    margin-top: 50px;
+}
+
+/* #smiley-icon {
+            font-size: 100px;
+            margin: 20px 0;
+        } */
+
+#smiley-icon {
+    font-size: 100px;
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 250px;
+}
+
+
+/* ⭐ NEW CSS FIX: Ensure the image inside the smiley-icon fits its container */
+#smiley-icon img {
+    max-width: 40%;
+    max-height: 40%;
+    object-fit: contain;
+    /* Ensures the whole image is visible without cropping */
+}
+
+/* --- Reusable Button Style --- */
+
+.button {
+    padding: 12px 25px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    background: #f0f0f0;
+    border: 2px solid #ccc;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 200px;
+}
+
+.button:hover {
+    background: #e5e5e5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+/* --- Container Responsiveness --- */
+@media (max-width: 768px) {
+    .container {
+        /* width: 95%; */
+        height: auto;
+        /* allow container to adjust to content */
+        padding: 15px;
+    }
+
+    #start-screen h1 {
+        font-size: 2rem;
+        margin-top: 12%;
+    }
+
+    .game-layout {
+        flex-direction: column;
+        /* stack drop-zone and parts-bin */
+        align-items: center;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .button {
+        min-width: auto;
+        /* remove fixed min-width */
+        width: 50%;
+        /* make button width relative */
+        max-width: 300px;
+        /* max width */
+        font-size: 1.2rem;
+        padding: 10px 0;
+        margin-top: auto;
+    }
+
+    .footer-logo {
+        bottom: 15px;
+        right: 15px;
+        max-width: 80px;
+        font-size: 0.6rem;
+        padding: 4px;
+    }
+
+    .footer-logo img {
+        max-width: 70%;
+    }
+
+    .footer-text {
+        bottom: 15px;
+        left: 15px;
+        font-size: 11px;
+    }
+
+    #drop-zone {
+        width: 80%;
+        height: auto;
+        min-height: 300px;
+        /* ensures space for images */
+    }
+
+    #parts-bin {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        height: auto;
+    }
+
+    .draggable {
+        width: 120px;
+        height: 60px;
+        font-size: 0.9rem;
+    }
+
+    .intro-image img {
+        max-width: 70%;
+        max-height: 300px;
+    }
+
+    .level-intro-layout {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        padding: 25px 10px;
+        text-align: center;
+    }
+
+    .intro-text {
+        align-items: center;
+        text-align: center;
+        margin: 0;
+    }
+
+    #smiley-icon {
+        max-height: 200px;
+        font-size: 80px;
+    }
+
+    #smiley-icon img {
+        max-width: 50%;
+        max-height: 50%;
+    }
+
+    .button:hover {
+        box-shadow: 0 1.5px 3px rgba(0, 0, 0, 0.08);
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 98%;
+        padding: 10px;
+    }
+
+    #start-screen h1 {
+        font-size: 1.5rem;
+        margin-top: 8%;
+        padding: 0 10px;
+        /* optional, to avoid touching screen edges */
+    }
+
+    .game-layout {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .button {
+        width: 50%;
+        min-width: auto;
+        font-size: 1rem;
+        padding: 8px 0;
+    }
+
+    .button:hover {
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07);
+    }
+
+    #drop-zone {
+        width: 95%;
+        min-height: 250px;
+    }
+
+    #parts-bin {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .footer-logo {
+        bottom: 10px;
+        right: 10px;
+        max-width: 60px;
+        font-size: 0.55rem;
+        padding: 3px;
+    }
+
+    .footer-logo img {
+        max-width: 65%;
+    }
+
+    .footer-text {
+        bottom: 10px;
+        left: 10px;
+        font-size: 10px;
+    }
+
+    .draggable {
+        width: 100px;
+        height: 50px;
+        font-size: 0.8rem;
+        padding: 3px;
+    }
+
+    .intro-image img {
+        max-width: 90%;
+        max-height: 250px;
+    }
+
+    .level-intro-layout {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px 5px;
+    }
+
+    .intro-text {
+        font-size: 0.9rem;
+    }
+
+    #smiley-icon {
+        max-height: 150px;
+        font-size: 60px;
+    }
+
+    #smiley-icon img {
+        max-width: 60%;
+        max-height: 60%;
+    }
+}
