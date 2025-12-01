@@ -1,125 +1,138 @@
 :root {
-  --border-color: #00bfa5;
-  --box-bg: #f5f5dc;
-  --box-border: #cccccc;
-  --text-orange: #f57c00;
-  --text-green: #388e3c;
-  --text-red: #d32f2f;
-  --text-blue: #0288d1;
+  --border-color:#00bfa5;
+  --box-bg:#f5f5dc;
+  --box-border:#cccccc;
+  --text-red:#d32f2f;
+  --text-blue:#0288d1;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* RESET */
+* { box-sizing: border-box; margin:0; padding:0; }
 body {
-  font-family: "cal Poppins", "Comic Sans MS", sans-serif;
-  background: #e0e0e0;
-  padding: 1rem;
+  font-family: "Nunito", sans-serif;
+  background:#e9ecef;
+  padding:1rem;
 }
+
+/* MAIN WRAPPER */
 .game-container {
-  max-width: 1000px;
-  margin: 20px auto;
-  border: 5px solid var(--border-color);
-  border-radius: 10px;
-  overflow: hidden;
-  background: white;
+  max-width:1100px;
+  margin:auto;
+  border:6px solid var(--border-color);
+  border-radius:16px;
+  background:#fff;
+  overflow:hidden;
 }
-.card-header {
-  padding: 1rem 1.25rem;
-}
-.character-img {
-  width: 120px;
-}
+
+/* HEADER */
 .title-main {
-  font-size: 1.4rem;
-  color: var(--text-red);
-  margin: 0;
-}
-.logo-img {
-  width: 140px;
-}
-.screen {
-  padding: 1rem;
-}
-.hidden {
-  display: none !important;
+  font-size:1.5rem;
+  color:var(--text-red);
+  font-weight:700;
 }
 
-/* Level content */
-.letter-box {
-  width: 120px;
-  height: 120px;
-  background: var(--box-bg);
-  border: 3px solid var(--box-border);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3rem;
-  font-weight: 800;
+/* LOGO */
+.logo-block { display:flex; flex-direction:column; align-items:center; }
+.logo-circle {
+  width:60px; height:60px;
+  border-radius:50%;
+  border:2px solid #fb923c;
+  overflow:hidden;
 }
-.large-box {
-  width: 180px;
-  height: 180px;
-  font-size: 4rem;
+.logo-img { width:100%; height:100%; object-fit:cover; }
+.copyright-text { font-size:10px; }
+
+/* RESPONSIVE RABBIT IMAGE FIX */
+.rabbit-responsive {
+  width:100%;
+  height:auto;
+  max-width:600px;
+  max-height:55vh;
+  object-fit:contain;
+  padding:10px;
 }
-.uppercase-color {
-  color: var(--text-blue);
+
+/* LEVEL 1 */
+#level-1 .level-content-1 {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:30px;
+  min-height:60vh;
 }
-.lowercase-color {
-  color: var(--text-red);
-}
-.letter-box.empty {
-  background: #e8e8e8;
-}
-.letter-box-wrapper {
-  text-align: center;
-}
+
 .letter-display-container {
-  display: flex;
-  gap: 2rem;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+  display:flex;
+  flex-direction:column;
+  gap:30px;
+  align-items:center;
 }
 
-.nav-buttons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
+/* LETTER BOXES */
+.letter-box {
+  width:120px; height:120px;
+  background:var(--box-bg);
+  border:3px solid var(--box-border);
+  border-radius:12px;
+  font-size:3rem;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-weight:bold;
 }
 
-/* Options */
-.options-container .option-letter {
-  font-size: 2rem;
-  padding: 0.5rem 0.75rem;
-  border-radius: 6px;
-  cursor: pointer;
-  background: #eafbe7;
-  border: 1px solid #bfe6c1;
+.large-box {
+  width:180px;
+  height:180px;
+  font-size:4rem;
 }
 
-/* Stars */
+.uppercase-color { color:var(--text-blue); }
+.lowercase-color { color:var(--text-red); }
+.empty { background:#eee !important; }
+
+/* OPTIONS */
+.option-letter {
+  padding:0.6rem 1rem;
+  font-size:1.8rem;
+  background:#eafbe7;
+  border-radius:8px;
+  cursor:pointer;
+  border:2px solid #bfe6c1;
+}
+.option-letter:focus {
+  outline:3px solid rgba(0,0,255,0.2);
+}
+
+/* STARS */
 .star-container {
-  font-size: 1.2rem;
-  color: #f1c40f;
+  display:flex;
+  gap:6px;
+  font-size:1.5rem;
+  color:gold;
 }
 
-/* Responsive */
-@media (max-width: 700px) {
-  .character-img {
-    width: 80px;
-  }
-  .large-box {
-    width: 140px;
-    height: 140px;
-    font-size: 3rem;
-  }
-  .letter-box {
-    width: 100px;
-    height: 100px;
-    font-size: 2.4rem;
-  }
+/* FEEDBACK */
+#feedback-msg {
+  margin-top:10px;
+}
+
+/* HOME ICON */
+.home-icon {
+  width:40px;
+  cursor:pointer;
+}
+
+/* LEVEL COMPLETE */
+#level-complete {
+  background:#f8f9fa;
+  padding:15px;
+  border-radius:10px;
+}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .large-box { width:140px; height:140px; font-size:3rem; }
+  .letter-box { width:100px; height:100px; font-size:2.2rem; }
+  .option-letter { font-size:1.4rem; }
 }
