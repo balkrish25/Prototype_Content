@@ -1,0 +1,61 @@
+/* style1.css */
+body {
+  font-family: "Nunito", sans-serif;
+}
+
+/* Option button base */
+.option-button {
+  transition: transform 150ms ease, box-shadow 150ms ease, opacity 150ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  border: 6px solid rgba(255,255,255,0.6);
+}
+
+/* Hover / focus */
+.option-button:hover,
+.option-button:focus {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 18px 30px -10px rgba(0,0,0,0.2);
+  outline: none;
+}
+
+/* Disabled state after selection */
+.option-button.disabled {
+  pointer-events: none;
+  opacity: 0.55;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Feedback screen animation helpers */
+#feedback-screen {
+  z-index: 50;
+}
+
+/* Star filled styles */
+.star.filled path {
+  fill: #ffd700;
+  stroke: #fdb813;
+}
+
+/* Star base color */
+.star path {
+  fill: #e6e6e6;
+  stroke: #a0aec0;
+}
+
+/* Logo style */
+#page-logo {
+  transition: transform 180ms ease;
+}
+#page-logo:hover {
+  transform: scale(1.03);
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  #question-container { font-size: 2rem; }
+  .option-button { width: 56px; height: 56px; font-size: 1.25rem; }
+}
