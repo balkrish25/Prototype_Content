@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Let us Learn the Numbers</title>
+
+  <!-- Tailwind CDN (keeps your original styling utility classes) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Local CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="flex items-center justify-center min-h-screen bg-white">
+
+  <!-- Game Container -->
+  <div id="game-container" class="relative w-full max-w-4xl aspect-[16/10] bg-white game-border rounded-lg shadow-2xl overflow-hidden flex flex-col">
+
+    <!-- Home Button (Persistent) -->
+    <button id="homeBtn" aria-label="Go Home" class="absolute top-4 right-4 z-50 cursor-pointer hover:scale-110 transition-transform" onclick="goHome()">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-red-600" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+      </svg>
+    </button>
+
+    <!-- SCREEN 1: Main Menu -->
+    <main id="menu-screen" class="w-full h-full flex flex-col items-center justify-center relative">
+      <h1 class="text-4xl md:text-5xl font-bold text-teal-700 mb-10 mt-5">Let us Learn the Numbers</h1>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-x-12 gap-y-8 w-3/4 max-w-2xl">
+        <!-- Level Buttons -->
+        <button onclick="startLevelFlow(1)" class="btn-oval bg-slate-100 border-2 border-slate-300 text-slate-700 font-bold py-3 px-6 hover:bg-blue-100 hover:border-blue-300">Start 1st Level</button>
+        <button onclick="startLevelFlow(2)" class="btn-oval bg-slate-100 border-2 border-slate-300 text-slate-700 font-bold py-3 px-6 hover:bg-blue-100 hover:border-blue-300">Start 2nd Level</button>
+        <button onclick="startLevelFlow(3)" class="btn-oval bg-slate-100 border-2 border-slate-300 text-slate-700 font-bold py-3 px-6 hover:bg-blue-100 hover:border-blue-300">Start 3rd Level</button>
+        <button onclick="startLevelFlow(4)" class="btn-oval bg-slate-100 border-2 border-slate-300 text-slate-700 font-bold py-3 px-6 hover:bg-blue-100 hover:border-blue-300">Start 4th Level</button>
+        <button onclick="startLevelFlow(5)" class="btn-oval bg-slate-100 border-2 border-slate-300 text-slate-700 font-bold py-3 px-6 hover:bg-blue-100 hover:border-blue-300">Start 5th Level</button>
+        <button onclick="startLevelFlow(6)" class="btn-oval bg-slate-100 border-2 border-slate-300 text-slate-700 font-bold py-3 px-6 hover:bg-blue-100 hover:border-blue-300">Start 6th Level</button>
+      </div>
+
+      <!-- Footer Info -->
+      <div class="absolute bottom-4 left-6 text-cyan-500 font-semibold text-sm md:text-base">
+        Prototype Content - Secondary Level
+      </div>
+
+      <!-- Logo -->
+      <div class="absolute bottom-4 right-6 flex flex-col items-center">
+    <div class="w-16 h-16 md:w-20 md:h-20 bg-orange-100 rounded-full flex items-center justify-center border-2 border-orange-300 overflow-hidden shadow-sm">
+        <img src="assets/Logo.jpeg" alt="Logo" class="w-full h-full object-cover">
+    </div>
+    <span class="text-[10px] text-gray-500 mt-1">© CDAC, KP, Bangalore</span>
+</div>
+
+    </main>
+
+    <!-- SCREEN 2: Interstitial (Start Level Intro) -->
+    <section id="interstitial-screen" class="hidden w-full h-full flex flex-col items-center justify-center text-center px-6">
+      <img id="intro-image" src="" alt="" class="hidden w-64 h-auto mb-4 object-contain">
+      <h2 id="interstitial-title" class="text-3xl font-bold text-teal-700 mb-8">Read and Learn the Number</h2>
+      <button id="interstitial-btn" onclick="runCurrentLevel()" class="btn-oval bg-white border-2 border-cyan-500 text-cyan-700 font-bold py-2 px-10 text-xl hover:bg-cyan-50 shadow-md">
+        Start 1st Level
+      </button>
+    </section>
+
+    <!-- SCREEN 3: Reading Mode (Equation) -->
+    <section id="read-screen" class="hidden w-full h-full flex flex-col items-center relative pt-8 px-6">
+      <h3 class="text-xl font-bold text-cyan-600 mb-8">Read the number</h3>
+
+      <div class="flex flex-col items-center justify-center flex-grow space-y-6 w-full mb-10">
+        <!-- Equation -->
+        <div class="text-5xl md:text-7xl font-bold text-equation flex items-center gap-4" aria-live="polite">
+          <span id="read-base">20</span>
+          <span>+</span>
+          <span id="read-add">1</span>
+          <span>=</span>
+          <span id="read-sum">21</span>
+        </div>
+        <!-- Word Form -->
+        <div class="text-2xl md:text-4xl font-bold text-word text-center px-4 leading-relaxed">
+          <span id="read-text">Twenty and One = Twenty-One</span>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="absolute bottom-10 flex items-center gap-16">
+        <div onclick="prevReadSlide()" class="flex flex-col items-center cursor-pointer group">
+          <div class="nav-arrow arrow-back group-hover:opacity-80" role="button" aria-label="Previous"></div>
+          <span class="text-slate-500 text-sm font-bold mt-1">Back</span>
+        </div>
+        <div onclick="nextReadSlide()" class="flex flex-col items-center cursor-pointer group">
+          <div class="nav-arrow arrow-next group-hover:opacity-80" role="button" aria-label="Next"></div>
+          <span class="text-slate-500 text-sm font-bold mt-1">Next</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 4: Quiz Mode -->
+    <section id="quiz-screen" class="hidden w-full h-full flex flex-col relative pt-4 px-4">
+      <!-- Stars -->
+      <div id="stars-container" class="flex gap-1 absolute top-4 left-4" aria-hidden="true"></div>
+
+      <div class="w-full h-full flex flex-col items-center justify-center">
+        <h3 class="text-xl font-bold text-slate-600 mb-6">Click on the right number</h3>
+
+        <!-- Question -->
+        <div class="flex flex-col md:flex-row items-center gap-4 mb-10">
+          <h2 id="quiz-question-text" class="text-4xl md:text-5xl font-bold text-teal-700">Twenty-Three = </h2>
+        </div>
+
+        <!-- Options -->
+        <div id="quiz-options" class="flex flex-wrap justify-center gap-6" role="list"></div>
+
+        <!-- Feedback Area -->
+        <div id="quiz-feedback" class="h-24 mt-8 flex flex-col items-center justify-center hidden" role="status" aria-live="polite">
+          <h2 id="feedback-text" class="text-4xl font-bold text-green-500 mb-2">Good!</h2>
+          <div id="feedback-next-btn" onclick="nextQuizQuestion()" class="flex flex-col items-center cursor-pointer animate-bounce" role="button" tabindex="0">
+            <div class="nav-arrow arrow-next"></div>
+            <span class="text-slate-500 text-sm font-bold">Next</span>
+          </div>
+          <div id="feedback-retry-btn" onclick="retryQuizQuestion()" class="hidden flex-col items-center cursor-pointer mt-2" role="button" tabindex="0">
+            <div class="nav-arrow arrow-back"></div>
+            <span class="text-slate-500 text-sm font-bold">Back</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Local JS -->
+  <script src="script.js"></script>
+</body>
+</html>
