@@ -5,21 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Let us Learn the Numbers</title>
 
-  <!-- Tailwind CDN (keeps your original styling utility classes) -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Google font -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Local CSS -->
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="flex items-center justify-center min-h-screen bg-white">
 
-  <!-- Game Container -->
   <div id="game-container" class="relative w-full max-w-4xl aspect-[16/10] bg-white game-border rounded-lg shadow-2xl overflow-hidden flex flex-col">
 
-    <!-- Home Button (Persistent) -->
     <button id="homeBtn" aria-label="Go Home" class="absolute top-4 right-4 z-50 cursor-pointer hover:scale-110 transition-transform" onclick="goHome()">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-red-600" viewBox="0 0 20 20" fill="currentColor">
         <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />

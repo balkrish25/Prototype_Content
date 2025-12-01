@@ -1,6 +1,5 @@
 /* script.js - separated logic from HTML */
 
-/* --- Data & State --- */
 const CAR_IMAGES = [
   "https://placehold.co/400x200/png?text=Good+Job!",
   "https://placehold.co/400x200/6ee7b7/054f3f/png?text=Nice+Work",
@@ -26,7 +25,6 @@ function getEquationText(num) {
   return `${NUM_WORDS[tens]} and ${NUM_WORDS[units]} = ${getNumberText(num)}`;
 }
 
-/* State */
 let currentLevel = 1;
 let currentSlide = 0;
 let quizScore = 0;
@@ -34,7 +32,6 @@ let quizCurrentQ = 0;
 const QUIZ_LENGTH = 10;
 let quizQuestions = [];
 
-/* DOM */
 const screens = {
   menu: document.getElementById('menu-screen'),
   interstitial: document.getElementById('interstitial-screen'),
@@ -42,7 +39,6 @@ const screens = {
   quiz: document.getElementById('quiz-screen')
 };
 
-/* --- Navigation --- */
 function switchScreen(screenName) {
   Object.values(screens).forEach(s => s.classList.add('hidden'));
   screens[screenName].classList.remove('hidden');
